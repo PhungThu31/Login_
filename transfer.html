@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <title>Transfer</title>
+    <style>
+        /* Css chế độ tối */
+       /* Phần Chuyển Tiền */
+/* Phần Chuyển Tiền */
+body.dark #transfer-section {
+    background-color: #1f1f1f; /* Nền tối */
+    color: #ffffff; /* Chữ trắng */
+}
+
+body.dark #transfer-section .form-section {
+    background: #333333; /* Nền tối cho form section */
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+body.dark #transfer-section input,
+body.dark #transfer-section select,
+body.dark #transfer-section button {
+    background: #333333; /* Nền tối cho các input và button */
+    color: #ffffff; /* Chữ trắng */
+    border: 1px solid #555;
+}
+
+body.dark #transfer-section input::placeholder,
+body.dark #transfer-section select::placeholder,
+body.dark #transfer-section button::placeholder {
+    color: #ffffff; /* Chữ trắng cho placeholder */
+}
+
+/* Phần Xác Nhận Giao Dịch */
+body.dark #confirmation {
+    background: #333333; /* Nền tối cho phần xác nhận giao dịch */
+    color: #ffffff; /* Chữ trắng */
+    padding: 20px;
+    border-radius: 8px;
+}
+
+body.dark #confirmation .confirmation-item {
+    background: #444444; /* Nền tối cho các item */
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+body.dark #confirmation .confirmation-item strong {
+    color: #ffffff; /* Chữ trắng cho phần strong */
+}
+
+body.dark #confirmation input,
+body.dark #confirmation button {
+    background: #333333; /* Nền tối cho input và button */
+    color: #ffffff; /* Chữ trắng */
+    border: 1px solid #555;
+}
+
+body.dark #confirmation input::placeholder,
+body.dark #confirmation button::placeholder {
+    color: #bbb; /* Chữ nhạt hơn cho placeholder */
+}
+
+/* Phần Mã OTP */
+body.dark #otp-popup {
+    background: #1f1f1f; /* Nền tối cho popup */
+    color: #ffffff; /* Chữ trắng */
+    padding: 20px;
+    border-radius: 8px;
+}
+
+body.dark #otp-popup .otp-popup-content {
+    background: #1f1f1f; /* Nền tối cho nội dung popup */
+    color: #ffffff; /* Chữ trắng */
+    padding: 20px;
+    border-radius: 5px;
+}
+
+body.dark #otp-popup .close-btn {
+    background: var(--danger); /* Màu đỏ cho nút đóng */
+    color: #ffffff; /* Chữ trắng */
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+body.dark #otp-popup .close-btn:hover {
+    background-color: var(--light-danger); /* Đỏ sáng hơn khi hover */
+}
+
+body.dark #otp-popup #otp-code-display {
+    font-size: 20px;
+}
+
+body.dark #otp-popup #otp-code {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Phương thức xác nhận */
+body.dark .auth-method {
+    background: #1f1f1f; /* Nền tối cho phương thức xác nhận */
+    color: #ffffff; /* Chữ trắng */
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+body.dark .auth-method .input-group input {
+    background: #333333; /* Nền tối cho input */
+    color: #ffffff; /* Chữ trắng */
+    border: 1px solid #555;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+body.dark .auth-method button {
+    background: #007bff; /* Nền xanh dương */
+    color: #ffffff; /* Chữ trắng */
+    border: 1px solid #007bff; /* Viền màu xanh dương */
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+body.dark .auth-method button:hover {
+    background-color: #0056b3; /* Màu xanh dương đậm hơn khi hover */
+}
+
+
+
+
+
+
+        main {
+            color: var(--text-color);
+            
+        }
+        .form-section {
+            margin-bottom: 15px;
+            
+        }
+        #transfer-section {
+            max-width: 1000px;  /* Đặt chiều rộng tối đa */
+            margin: 0 auto;    /* Canh giữa phần tử */
+            padding: 20px;     /* Thêm khoảng cách xung quanh nội dung */
+            background-color: #fff;  /* Màu nền của form */
+            border-radius: 8px;  /* Bo tròn các góc */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Thêm hiệu ứng bóng */
+        }
+      
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+
+
+        .account-info {
+            margin-bottom: 10px;
+        }
+        .account-info label {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #555;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .account-info input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        .account-info input:focus {
+            border-color: #007bff;
+            outline: none;
+            background-color: #fff;
+        }
+        .balance-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    
+
+
+        button img {
+            width: 16px; /* Giảm kích thước hình ảnh biểu tượng mắt */
+            height: 16px;
+        }
+        button:focus {
+            outline: none;
+            border-color: #007bff; /* Thêm viền khi focus */
+        }
+
+         /* CSS cho .form-group */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        /* CSS cho .dropdown */
+        .dropdown {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* CSS cho .bank-logos */
+        .bank-logos {
+            display: flex;
+            justify-content: space-around;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        .bank-logos img {
+            width: 5%;
+            height: 5%;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+
+        .form-section label {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #555;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-section input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+
+        .form-section input:focus {
+            border-color: #007bff;
+            outline: none;
+            background-color: #fff;
+        }
+
+        .balance-wrapper {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #bank-suggestions {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .bank-item {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .bank-item img {
+            width: 20px;
+            margin-right: 10px;
+        }
+
+        button {
+            background-color: transparent;
+            border: 1px solid #ddd;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 5px 15px; /* Điều chỉnh chiều rộng và chiều cao của nút */
+            padding: 12px;
+            min-width: 9%;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+
+
+
+
+        #confirmation {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: 'Arial', sans-serif;
+}
+
+.confirmation-header {
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: space-between; /* Khoảng cách giữa nút và tiêu đề */
+    margin-bottom: 20px; /* Tạo khoảng cách dưới tiêu đề */
+    border-bottom: 1px solid #ddd; /* Thêm đường kẻ dưới nếu muốn */
+    padding-bottom: 10px;
+    width: 100%; /* Đảm bảo phần header chiếm toàn bộ chiều rộng */
+}
+
+.confirmation-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333;
+    flex-grow: 1; /* Tiêu đề sẽ chiếm toàn bộ không gian giữa */
+    text-align: center; /* Căn giữa nội dung tiêu đề */
+}
+
+.back-btn {
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s;
+}
+.back-btn:hover {
+    color: #2980b9; /* Màu khi hover */
+}
+
+.back-btn span {
+    font-size: 18px; /* Kích thước icon mũi tên */
+}
+
+
+
+.confirmation-item {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.confirmation-item strong {
+    display: block; /* Hiển thị tiêu đề trên một hàng riêng */
+    color: #2c3e50;
+    margin-bottom: 5px; /* Tạo khoảng cách nhỏ với giá trị */
+}
+
+.confirmation-value {
+    color: #7f8c8d;
+    font-size: 16px;
+    font-weight: normal;
+    word-wrap: break-word; /* Đảm bảo xuống dòng nếu dữ liệu quá dài */
+}
+
+.confirmation-item input {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-top: 5px;
+    width: 80%;
+}
+
+.confirmation-item button {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.confirmation-item button:hover {
+    background-color: #2980b9;
+}
+
+.confirmation-item label {
+    font-size: 14px;
+    color: #2c3e50;
+}
+
+
+/* Phần chứa phương thức xác thực */
+.auth-method {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 0 auto;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Tiêu đề cho phương thức xác thực */
+.auth-method label {
+    font-size: 16px;
+    color: #2c3e50;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Nhóm nhập liệu */
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.input-group input {
+    flex: 1; /* Tự động giãn đầy không gian */
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+/* Nhóm nút bấm */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.button-group button {
+    flex: 1; /* Đảm bảo các nút đều có kích thước bằng nhau */
+    padding: 10px;
+    font-size: 14px;
+    color: white;
+    background-color: #3498db;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button-group button:hover {
+    background-color: #2980b9;
+}
+
+.button-group button:active {
+    background-color: #1c6ea4;
+}
+
+
+
+
+         /* Popup chứa mã OTP */
+   /* Nền mờ khi khung OTP hiển thị */
+/* Popup OTP */
+#otp-popup {
+    position: absolute; /* Định vị dựa trên container cha */
+    top: 50%; /* Căn giữa theo chiều dọc */
+    left: 50%; /* Căn giữa theo chiều ngang */
+    transform: translate(-50%, -50%); /* Đưa popup về đúng giữa container */
+    width: 300px; /* Độ rộng popup */
+    background: #fff; /* Nền trắng */
+    padding: 20px; /* Khoảng cách bên trong */
+    border-radius: 10px; /* Bo góc */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+    text-align: center;
+    z-index: 1000; /* Đảm bảo popup nằm trên các thành phần khác */
+    display: none; /* Ẩn mặc định */
+}
+
+/* Khi popup hiển thị */
+#otp-popup.show {
+    display: block;
+}
+
+
+
+/* Nút đóng khung OTP */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.close-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Nội dung mã OTP */
+#otp-code {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3498db;
+    padding: 10px 0;
+    text-align: center;
+}
+/* Hiệu ứng khi khung hiển thị */
+#otp-popup.fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+     <div class="sidebar">
+        <a href="#" class="logo">
+            <i class='bx bx-code-alt'></i>
+            <div class="logo-name"><span>TDH</span> Bank</div>
+        </a>
+        <ul class="side-menu">
+            <li><a href="home.html"><i class='bx bx-home'></i>Home</a></li>
+            <li><a href="wallet.html"><i class='bx bx-wallet'></i>Wallet</a></li>
+            <li class="active"><a href="transfer.html"><i class='bx bx-transfer-alt'></i>Transfer</a></li>
+            <li><a href="saving.html"><i class='bx bx-leaf'></i>Saving</a></li>
+            <li><a href="user.html"><i class='bx bx-group'></i>Users</a></li>
+            <li><a href="historytransaction.html"><i class='bx bx-bell'></i>History</a></li>
+            <li><a href="setting.html"><i class='bx bx-cog'></i>Settings</a></li>
+        </ul>
+        <ul class="side-menu">
+            <li>
+                <a href="#" class="logout">
+                    <i class='bx bx-log-out-circle'></i>
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- End of Sidebar -->
+
+     <!-- Main Content -->
+    <div class="content">
+        <!-- Navbar -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <input type="checkbox" id="theme-toggle" hidden>
+            <label for="theme-toggle" class="theme-toggle"></label>
+            <a href="#" class="notif">
+                <i class='bx bx-bell'></i>
+                <span class="count">12</span>
+            </a>
+            <a href="#" class="profile">
+                <img src="img/logo.png">
+            </a>
+        </nav>
+        <!-- End of Navbar -->
+
+
+        <main>
+            <!-- Phần Chuyển Tiền -->
+            <div id="transfer-section">
+                <!-- Từ tài khoản nguồn -->
+                <div class="form-section">
+                    <label for="source-account">Từ tài khoản nguồn</label>
+                    <div class="account-info">
+                        <input type="text" id="source-account" value="3777149" placeholder="Số tài khoản người gửi" readonly required>
+                    </div>
+                    <div class="account-info">
+                        <label for="source-balance">Số dư tài khoản:</label>
+                        <div class="balance-wrapper">
+                            <input type="password" id="source-balance" placeholder="*** VND" disabled>
+                            <button id="toggle-balance" type="button">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Chọn ngân hàng -->
+                <div class="form-section">
+                    <label for="beneficiary-bank">Ngân hàng thụ hưởng</label>
+                    <select class="dropdown"></select>
+                    <p>Gợi ý</p>
+                    <div class="bank-logos"></div>
+                </div>
+                
+                <!-- Chọn tài khoản thụ hưởng -->
+                <div class="form-section">
+                    <label for="beneficiary-account">Tài khoản thụ hưởng:</label>
+                    <input 
+                        type="text" 
+                        id="beneficiary-account" 
+                        placeholder="Nhập tài khoản thụ hưởng" 
+                        oninput="updateBeneficiaryName()" 
+                        required>
+                </div>
+                <div class="form-section">
+                    <label for="beneficiary-name">Tên người thụ hưởng:</label>
+                    <input 
+                        type="text" 
+                        id="beneficiary-name" 
+                        placeholder="Tên người thụ hưởng" 
+                        disabled>
+                </div>
+            
+                <!-- Số tiền chuyển -->
+                <div class="form-section">
+                    <label for="amount">Số tiền chuyển:</label>
+                    <input type="number" id="amount" placeholder="Nhập số tiền" required>
+                </div>
+            
+                <!-- Nội dung chuyển tiền -->
+                <div class="form-section">
+                    <label for="message">Nội dung chuyển tiền:</label>
+                    <input 
+                        type="text" 
+                        id="message" 
+                        placeholder="Nhập nội dung chuyển tiền" >
+                </div>
+            
+                <!-- Nút tiếp tục -->
+                <div class="form-section">
+                    <button type="button" onclick="goToConfirmation()">Tiếp tục</button>
+                </div>
+            </div>
+        
+            <!-- Phần Xác thực giao dịch -->
+            <div id="confirmation" style="display: none;">
+                
+                <div class="confirmation-header">
+                    <button type="button" class="back-btn" onclick="returnToTransfer()">
+                        <span>&lt;</span>
+                    </button>
+                    <h3>Xác thực giao dịch</h3>
+                </div>
+                <div class="confirmation-item">
+                    <strong>Tài khoản nguồn:</strong>
+                    <div><span id="source-account-confirm"></span></div>
+                </div>
+                <div class="confirmation-item">
+                    <strong>Tài khoản thụ hưởng:</strong>
+                    <div><span id="beneficiary-account-confirm"></span></div>
+                </div>
+                <div class="confirmation-item">
+                    <strong>Tên người thụ hưởng:</strong>
+                    <div><span id="beneficiary-name-confirm"></span></div>
+                </div>
+                <div class="confirmation-item">
+                    <strong>Số tiền:</strong>
+                    <div><span id="amount-confirm"></span></div>
+                </div>
+                <div class="confirmation-item">
+                    <strong>Phí giao dịch:</strong>
+                    <div><span id="fee-confirm"></span></div>
+                </div>
+                <div class="confirmation-item">
+                    <strong>Tổng tiền:</strong>
+                    <div><span id="total-amount-confirm"></span></div>
+                </div>
+                <div class="confirmation-item">
+                    <strong>Nội dung chuyển tiền:</strong>
+                    <div><span id="message-confirm"></span></div>
+                </div>
+            
+                <div class="auth-method">
+                    <label for="otp">Phương thức xác thực:</label>
+                    <div class="input-group">
+                        <input type="text" id="otp" placeholder="Nhập mã OTP" required>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" onclick="sendOtp()">Gửi mã OTP</button>
+                        <button type="button" onclick="confirmTransaction()">Xác nhận</button>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <!-- Khung hiển thị mã OTP -->
+            <div id="otp-popup" style="display: none;">
+                <div class="otp-popup-content">
+                    <p id="otp-code-display">Mã OTP của bạn</p>
+                    <div><span id="otp-code"></span></div>
+                    <button onclick="closeOtpPopup()" class="close-btn">X</button>
+                </div>
+            </div>
+        </main>
+        
+        
+
+    <script>
+
+        // Ẩn/Hiện số dư tài khoản
+        document.getElementById('toggle-balance').onclick = function() {
+            let balanceField = document.getElementById('source-balance');
+            if (balanceField.type === "password") {
+                balanceField.type = "text"; // Hiện số dư
+                balanceField.value = "300000 VND"; // Giả lập số dư tài khoản
+            } else {
+                balanceField.type = "password"; // Ẩn số dư
+                balanceField.value = "*** VND"; 
+            }
+        }; 
+
+
+
+
+
+        // Dữ liệu về ngân hàng và logo
+        const banks = [
+            { name: "Ngân hàng TMCP Ngoại Thương Việt Nam", logo: "img/vietcombank.jpeg" },
+            { name: "Ngân hàng Agribank", logo: "img/agribank.jpg" },
+            { name: "Ngân hàng MB Bank", logo: "img/mbbank.jpg" },
+            { name: "Ngân hàng BIDV", logo: "img/BIDV.png" },
+            { name: "Ngân hàng Sacombank", logo: "img/scb.jpg" },
+            { name: "Ngân hàng Techcombank", logo: "img/tcb.jpg" },
+            { name: "Ngân hàng TPBank", logo: "img/tpb.jpg" },
+
+        ];
+
+        // Chèn các option vào dropdown
+        const dropdown = document.querySelector('.dropdown');
+        banks.forEach(bank => {
+            const option = document.createElement('option');
+            option.textContent = bank.name;
+            option.value = bank.name;  // Đảm bảo giá trị của option là tên ngân hàng
+            dropdown.appendChild(option);
+        });
+
+        // Chèn các logo vào phần bank-logos
+        const bankLogos = document.querySelector('.bank-logos');
+        banks.forEach(bank => {
+            const img = document.createElement('img');
+            img.src = bank.logo;
+            img.alt = `Logo ${bank.name}`;
+            img.setAttribute('data-bank-name', bank.name);  // Thêm dữ liệu tên ngân hàng vào từng logo
+            bankLogos.appendChild(img);
+        });
+
+        // Xử lý sự kiện khi nhấp vào logo
+        bankLogos.addEventListener('click', function(event) {
+            const clickedElement = event.target;
+            
+            // Kiểm tra xem người dùng có nhấp vào logo (img) không
+            if (clickedElement.tagName.toLowerCase() === 'img') {
+                const selectedBank = clickedElement.getAttribute('data-bank-name');
+                
+                // Cập nhật giá trị của dropdown khi nhấp vào logo
+                dropdown.value = selectedBank;
+            }
+        });
+
+
+
+       
+
+        let beneficiaryData = []; // Chứa dữ liệu bao gồm ngân hàng, tên và số tài khoản
+
+        // Hàm tải file từ thư mục và lưu vào beneficiaryData
+        function loadBeneficiaryData() {
+            fetch('/Bank.txt') // Đường dẫn đến file trong thư mục
+                .then(response => response.text()) // Đọc file dưới dạng text
+                .then(data => processBeneficiaryData(data)) // Xử lý dữ liệu sau khi tải xong
+                .catch(error => console.error('Lỗi khi tải file:', error));
+        }
+
+        // Hàm xử lý dữ liệu trong file
+        function processBeneficiaryData(content) {
+            const lines = content.split('\n'); // Tách theo dòng
+            beneficiaryData = []; // Khởi tạo lại mảng beneficiaryData
+
+            lines.forEach(line => {
+                const [bank, name, account] = line.split('\t'); // Tách theo tab
+                if (bank && name && account) {
+                    beneficiaryData.push({
+                        bank: bank.trim(),
+                        name: name.trim(),
+                        account: account.trim(),
+                    });
+                }
+            });
+
+            console.log(beneficiaryData); // Kiểm tra dữ liệu đã được tải vào beneficiaryData
+        }
+
+        // Hàm cập nhật tên người thụ hưởng khi nhập tài khoản và chọn ngân hàng
+        function updateBeneficiaryName() {
+            const accountInput = document.getElementById('beneficiary-account').value.trim(); // Số tài khoản
+            const selectedBank = document.querySelector('.dropdown').value; // Ngân hàng đã chọn
+            const beneficiaryNameInput = document.getElementById('beneficiary-name'); // Trường tên người thụ hưởng
+
+            // Tìm thông tin người thụ hưởng với cả ngân hàng và số tài khoản
+            const beneficiary = beneficiaryData.find(
+                entry => entry.bank === selectedBank && entry.account === accountInput
+            );
+
+            // Hiển thị tên người thụ hưởng hoặc thông báo không tìm thấy
+            beneficiaryNameInput.value = beneficiary ? beneficiary.name : "Không tìm thấy";
+        }
+
+            // Tải dữ liệu khi trang được tải
+            window.onload = loadBeneficiaryData;
+
+ 
+
+
+
+            // Hàm chuyển đến xác thực giao dịch
+            function goToConfirmation() {
+                // Ẩn phần xác thực giao dịch nếu đang hiển thị
+                document.getElementById('confirmation').style.display = 'none'; 
+
+                // Lấy dữ liệu từ form chuyển tiền
+                const sourceAccount = document.getElementById('source-account').value;
+                const beneficiaryAccount = document.getElementById('beneficiary-account').value;
+                const beneficiaryName = document.getElementById('beneficiary-name').value;
+                const amount = document.getElementById('amount').value;
+                const message = document.getElementById('message').value;
+
+                // Cập nhật dữ liệu vào phần xác thực giao dịch
+                document.getElementById('source-account-confirm').textContent = sourceAccount;
+                document.getElementById('beneficiary-account-confirm').textContent = beneficiaryAccount;
+                document.getElementById('beneficiary-name-confirm').textContent = beneficiaryName;
+                document.getElementById('amount-confirm').textContent = amount;
+                document.getElementById('message-confirm').textContent = message;
+
+                // Giả lập phí giao dịch và tổng tiền
+                const fee = 1000; // Ví dụ: phí giao dịch
+                const totalAmount = parseFloat(amount) + fee;
+
+                document.getElementById('fee-confirm').textContent = fee + ' VND';
+                document.getElementById('total-amount-confirm').textContent = totalAmount + ' VND';
+
+                // Ẩn phần chuyển tiền và hiển thị phần xác thực giao dịch
+                document.getElementById('transfer-section').style.display = 'none';
+                document.getElementById('confirmation').style.display = 'block';
+            }
+
+            function returnToTransfer() {
+    // Lấy phần tử phần chuyển tiền
+    var transferSection = document.getElementById("transfer-section");
+    
+    // Kiểm tra nếu phần tử tồn tại
+    if (transferSection) {
+        // Hiển thị lại phần chuyển tiền
+        transferSection.style.display = 'block';
+
+        // Ẩn phần xác thực giao dịch
+        var confirmationSection = document.getElementById("confirmation");
+        confirmationSection.style.display = 'none';
+
+        // Cuộn trang về phần chuyển tiền
+        transferSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+        console.error("Không tìm thấy phần tử với ID 'transfer-section'");
+    }
+}
+
+
+
+
+           // Tạo OTP giả lập
+    function generateOTP() {
+        return Math.floor(100000 + Math.random() * 900000); // OTP 6 chữ số ngẫu nhiên
+    }
+
+    let otpCode = generateOTP();
+
+    // Hàm gửi OTP
+    function sendOtp() {
+        // Hiển thị popup với mã OTP
+        document.getElementById('otp-code').textContent = otpCode;
+        document.getElementById('otp-popup').style.display = 'block';
+    }
+
+    // Đóng khung popup khi nhấn "X"
+    function closeOtpPopup() {
+        document.getElementById('otp-popup').style.display = 'none';
+    }
+
+    // Hàm xác nhận giao dịch (kiểm tra OTP)
+    function confirmTransaction() {
+    const otp = document.getElementById('otp').value;
+    if (otp === otpCode.toString()) {
+        alert('Giao dịch thành công!');
+        // Quay lại phần Chuyển tiền sau khi giao dịch thành công
+        document.getElementById('transfer-section').style.display = 'block';
+        document.getElementById('confirmation').style.display = 'none';
+    } else {
+        alert('Mã OTP sai, yêu cầu nhập lại!');
+    }
+}
+
+    
+
+
+    </script>
+
+</main>
+
+<script src="script.js"></script>
+    </div>     
+                
+
+</body>
+</html>
