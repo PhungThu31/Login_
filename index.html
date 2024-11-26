@@ -1,216 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="style.css" />
-    <title>Home</title>
-  </head>
-
-  <body>
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <a href="#" class="logo">
-        <i class="bx bx-code-alt"></i>
-        <div class="logo-name"><span>TDH</span> Bank</div>
-      </a>
-      <ul class="side-menu">
-        <li class="active">
-          <a href="#"><i class="bx bx-home"></i>Home</a>
-        </li>
-        <li>
-          <a href="wallet.html"><i class="bx bx-wallet"></i>Wallet</a>
-        </li>
-        <li>
-          <a href="transfer.html"><i class="bx bx-transfer-alt"></i>Transfer</a>
-        </li>
-        <li>
-          <a href="saving.html"><i class="bx bx-leaf"></i>Saving</a>
-        </li>
-        <li>
-          <a href="user.html"><i class="bx bx-group"></i>Users</a>
-        </li>
-        <li>
-          <a href="historytransaction.html"
-            ><i class="bx bx-bell"></i>History</a
-          >
-        </li>
-        <li>
-          <a href="setting.html"><i class="bx bx-cog"></i>Settings</a>
-        </li>
-      </ul>
-      <ul class="side-menu">
-        <li>
-          <a href="logout.html" class="logout">
-            <i class="bx bx-log-out-circle"></i>
-            Logout
-          </a>
-        </li>
-      </ul>
-    </div>
-    <!-- End of Sidebar -->
-
-    <!-- Main Content -->
-    <div class="content">
-      <!-- Navbar -->
-      <nav>
-        <i class="bx bx-menu"></i>
-        <form action="#">
-          <div class="form-input">
-            <input type="search" placeholder="Search..." />
-            <button class="search-btn" type="submit">
-              <i class="bx bx-search"></i>
-            </button>
-          </div>
-        </form>
-        <input type="checkbox" id="theme-toggle" hidden />
-        <label for="theme-toggle" class="theme-toggle"></label>
-        <a href="#" class="notif">
-          <i class="bx bx-bell"></i>
-          <span class="count">12</span>
-        </a>
-        <a href="#" class="profile">
-          <img src="img/logo.png" />
-        </a>
-      </nav>
-
-      <!-- End of Navbar -->
-
-      <main>
-        <div class="header">
-          <div class="left">
-            <h1>Dashboard</h1>
-          </div>
-          <a href="#" class="report">
-            <i class="bx bx-cloud-download"></i>
-            <span>Download CSV</span>
-          </a>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+     <!-- font -->
+     <link rel="preconnect" href="https://fonts.googleapis.com" />
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+     <link
+       rel="stylesheet"
+       id="kadence-fonts-css"
+       href="https://fonts.googleapis.com/css?family=Outfit:regular,700,500&amp;display=swap"
+       media="all"
+     />
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.5.0/remixicon.css" integrity="sha512-6p+GTq7fjTHD/sdFPWHaFoALKeWOU9f9MPBoPnvJEWBkGS4PKVVbCpMps6IXnTiXghFbxlgDE8QRHc3MU91lJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login_box">
+            <h2>Login</h2>
+            <form action="#">
+                <div class="input_box">
+                    <input type="email" placeholder="Email">
+                    <label><i class="ri-mail-line"></i>Email</label>
+                </div>
+                <div class="input_box">
+                    <input type="password" placeholder="Password">
+                    <label><i class="ri-lock-line"></i>Password</label>
+                </div>
+                <div class="forgot_pass">
+                    <a href="forgotpassword.html">Forgot your password?</a>
+                </div>
+                <button type="submit" class="btn"><a href="../home.html">Login</a></button>
+                <div class="signup_link">
+                    <a href="register.html">Register </a>
+                </div>
+            </form>
         </div>
-
-        <!-- Insights -->
-        <ul class="insights">
-          <li>
-            <i class="bx bx-archive"></i>
-            <span class="info">
-              <h3>5,256$</h3>
-              <p>Balance</p>
-            </span>
-          </li>
-          <li>
-            <i class="bx bx-archive-in"></i>
-            <span class="info">
-              <h3>520$</h3>
-              <p>Recent payment</p>
-            </span>
-          </li>
-          <li>
-            <i class="bx bx-archive-out"></i>
-            <span class="info">
-              <h3>58$</h3>
-              <p>Recent spending</p>
-            </span>
-          </li>
-          <li>
-            <i class="bx bx-line-chart"></i>
-            <span class="info">
-              <h3>+88.85%</h3>
-              <p>Fluctuation rate</p>
-            </span>
-          </li>
-        </ul>
-        <!-- End of Insights -->
-
-        <div class="bottom-data">
-          <div class="orders">
-            <div class="header">
-              <i class="bx bx-receipt"></i>
-              <h3>Recent transaction</h3>
-              <i class="bx bx-filter"></i>
-              <i class="bx bx-search"></i>
-            </div>
-            <table>
-              <thead>
-                <tr>
-                  <th>User</th>
-                  <th>Order Date</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <img src="images/profile-1.jpg" />
-                    <p>John Doe</p>
-                  </td>
-                  <td>14-08-2023</td>
-                  <td><span class="status completed">20$</span></td>
-                  <td>bonus</td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="images/profile-1.jpg" />
-                    <p>John Doe</p>
-                  </td>
-                  <td>5-08-2023</td>
-                  <td><span class="status completed">500$</span></td>
-                  <td>July salary</td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="images/profile-1.jpg" />
-                    <p>John Doe</p>
-                  </td>
-                  <td>14-07-2023</td>
-                  <td><span class="status completed">50$</span></td>
-                  <td>bonus</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- Reminders -->
-          <div class="reminders">
-            <div class="header">
-              <i class="bx bx-note"></i>
-              <h3>Payment due</h3>
-              <i class="bx bx-filter"></i>
-              <i class="bx bx-plus"></i>
-            </div>
-            <ul class="task-list">
-              <li class="completed">
-                <div class="task-title">
-                  <i class="bx bx-check-circle"></i>
-                  <p>Internet</p>
-                </div>
-                <i class="bx bx-dots-vertical-rounded"></i>
-              </li>
-              <li class="completed">
-                <div class="task-title">
-                  <i class="bx bx-check-circle"></i>
-                  <p>Utility</p>
-                </div>
-                <i class="bx bx-dots-vertical-rounded"></i>
-              </li>
-              <li class="not-completed">
-                <div class="task-title">
-                  <i class="bx bx-x-circle"></i>
-                  <p>Membership</p>
-                </div>
-                <i class="bx bx-dots-vertical-rounded"></i>
-              </li>
-            </ul>
-          </div>
-
-          <!-- End of Reminders-->
-        </div>
-      </main>
+        <!-- Create 50 spans for the circular effect -->
+        <span style="--i:0;"></span>
+        <span style="--i:1;"></span>
+        <span style="--i:2;"></span>
+        <span style="--i:3;"></span>
+        <span style="--i:4;"></span>
+        <span style="--i:5;"></span>
+        <span style="--i:6;"></span>
+        <span style="--i:7;"></span>
+        <span style="--i:8;"></span>
+        <span style="--i:9;"></span>
+        <span style="--i:10;"></span>
+        <span style="--i:11;"></span>
+        <span style="--i:12;"></span>
+        <span style="--i:13;"></span>
+        <span style="--i:14;"></span>
+        <span style="--i:15;"></span>
+        <span style="--i:16;"></span>
+        <span style="--i:17;"></span>
+        <span style="--i:18;"></span>
+        <span style="--i:19;"></span>
+        <span style="--i:20;"></span>
+        <span style="--i:21;"></span>
+        <span style="--i:22;"></span>
+        <span style="--i:23;"></span>
+        <span style="--i:24;"></span>
+        <span style="--i:25;"></span>
+        <span style="--i:26;"></span>
+        <span style="--i:27;"></span>
+        <span style="--i:28;"></span>
+        <span style="--i:29;"></span>
+        <span style="--i:30;"></span>
+        <span style="--i:31;"></span>
+        <span style="--i:32;"></span>
+        <span style="--i:33;"></span>
+        <span style="--i:34;"></span>
+        <span style="--i:35;"></span>
+        <span style="--i:36;"></span>
+        <span style="--i:37;"></span>
+        <span style="--i:38;"></span>
+        <span style="--i:39;"></span>
+        <span style="--i:40;"></span>
+        <span style="--i:41;"></span>
+        <span style="--i:42;"></span>
+        <span style="--i:43;"></span>
+        <span style="--i:44;"></span>
+        <span style="--i:45;"></span>
+        <span style="--i:46;"></span>
+        <span style="--i:47;"></span>
+        <span style="--i:48;"></span>
+        <span style="--i:49;"></span>
     </div>
-
-    <script src="script.js"></script>
-  </body>
+</body>
 </html>
