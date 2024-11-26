@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>User</title>
+  </head>
+  <style>
+    .main-content {
+      margin-left: 240px;
+      padding: 20px;
+    }
+
+    .custom-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .search-input {
+      display: flex;
+    }
+
+    .search-btn {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* User section */
+    .user-main-content {
+      margin-top: 20px;
+    }
+
+    .user-header .header-left h1 {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .user-details {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .user-avatar img {
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+    }
+
+    .user-features {
+      display: grid;
+      gap: 10px;
+    }
+
+    .utilities-section {
+      margin-top: 30px;
+    }
+
+    .utilities-title {
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .utilities-items {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    /* Expense chart */
+    .expense-chart-section {
+      margin-top: 30px;
+    }
+
+    .chart-categories {
+      list-style: none;
+      padding: 0;
+    }
+
+    .chart-categories li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .chart-categories li span {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: var(--light);
+      width: 230px;
+      height: 100%;
+      z-index: 2000;
+      overflow-x: hidden;
+      scrollbar-width: none;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .sidebar.close {
+      width: 60px;
+    }
+
+    /* Sidebar Logo */
+    .sidebar .logo {
+      font-size: 24px;
+      font-weight: 700;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      color: var(--primary);
+      z-index: 500;
+      padding-bottom: 20px;
+      box-sizing: content-box;
+    }
+
+    .sidebar .logo .logo-name span {
+      color: var(--dark);
+    }
+
+    .sidebar .logo .bx {
+      min-width: 60px;
+      display: flex;
+      justify-content: center;
+      font-size: 2.2rem;
+    }
+
+    /* Sidebar Menu */
+    .sidebar .side-menu {
+      width: 100%;
+      margin-top: 48px;
+    }
+
+    .sidebar .side-menu li {
+      height: 48px;
+      background: transparent;
+      margin-left: 6px;
+      border-radius: 48px 0 0 48px;
+      padding: 4px;
+    }
+
+    .sidebar .side-menu li.active {
+      background: var(--grey);
+      position: relative;
+    }
+
+    .sidebar .side-menu li.active::before {
+      content: "";
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      top: -40px;
+      right: 0;
+      box-shadow: 20px 20px 0 var(--grey);
+      z-index: -1;
+    }
+
+    .sidebar .side-menu li.active::after {
+      content: "";
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      bottom: -40px;
+      right: 0;
+      box-shadow: 20px -20px 0 var(--grey);
+      z-index: -1;
+    }
+
+    .sidebar .side-menu li a {
+      width: 100%;
+      height: 100%;
+      background: var(--light);
+      display: flex;
+      align-items: center;
+      border-radius: 48px;
+      font-size: 16px;
+      color: var(--dark);
+      white-space: nowrap;
+      overflow-x: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar .side-menu li.active a {
+      color: var(--success);
+    }
+
+    .sidebar.close .side-menu li a {
+      width: calc(48px - (4px * 2));
+      transition: all 0.3s ease;
+    }
+
+    .sidebar .side-menu li a .bx {
+      min-width: calc(60px - ((4px + 6px) * 2));
+      display: flex;
+      font-size: 1.6rem;
+      justify-content: center;
+    }
+
+    .sidebar .side-menu li a.logout {
+      color: var(--danger);
+    }
+
+    /* Content Section */
+    .content {
+      position: relative;
+      width: calc(100% - 230px);
+      left: 230px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar.close ~ .content {
+      width: calc(100% - 60px);
+      left: 60px;
+    }
+
+    .content nav {
+      height: 56px;
+      background: var(--light);
+      padding: 0 24px 0 0;
+      display: flex;
+      align-items: center;
+      grid-gap: 24px;
+      position: sticky;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .content nav::before {
+      content: "";
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      bottom: -40px;
+      left: 0;
+      border-radius: 50%;
+      box-shadow: -20px -20px 0 var(--light);
+    }
+
+    .content nav a {
+      color: var(--dark);
+    }
+
+    .content nav .bx.bx-menu {
+      cursor: pointer;
+      color: var(--dark);
+    }
+
+    .content nav form {
+      max-width: 400px;
+      width: 100%;
+      margin-right: auto;
+    }
+
+    .content nav form .form-input {
+      display: flex;
+      align-items: center;
+      height: 36px;
+    }
+
+    .content nav form .form-input input {
+      flex-grow: 1;
+      padding: 0 16px;
+      height: 100%;
+      border: none;
+      background: var(--grey);
+      border-radius: 36px 0 0 36px;
+      outline: none;
+      width: 100%;
+      color: var(--dark);
+    }
+
+    .content nav form .form-input button {
+      width: 80px;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--primary);
+      color: var(--light);
+      font-size: 18px;
+      border: none;
+      outline: none;
+      border-radius: 0 36px 36px 0;
+      cursor: pointer;
+    }
+
+    .content nav .notif {
+      font-size: 20px;
+      position: relative;
+    }
+
+    .content nav .notif .count {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      width: 20px;
+      height: 20px;
+      background: var(--danger);
+      border-radius: 50%;
+      color: var(--light);
+      border: 2px solid var(--light);
+      font-weight: 700;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .content nav .profile img {
+      width: 36px;
+      height: 36px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .content nav .theme-toggle {
+      display: block;
+      min-width: 50px;
+      height: 25px;
+      background: var(--grey);
+      cursor: pointer;
+      position: relative;
+      border-radius: 25px;
+    }
+
+    .content nav .theme-toggle::before {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      bottom: 2px;
+      width: calc(25px - 4px);
+      background: var(--primary);
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .content nav #theme-toggle:checked + .theme-toggle::before {
+      left: calc(100% - (25px - 4px) - 2px);
+    }
+
+    /* Logout Modal */
+    .logout {
+      background-image: url(/img/logout.jpg);
+      display: flex;
+      width: 100%;
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .logout-card {
+      position: fixed;
+      top: 50%;
+      left: 60%;
+      transform: translate(-50%, -50%);
+      background: #9eaba2;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 24px;
+      text-align: center;
+      z-index: 3000;
+      width: 400px;
+      animation: fadeIn 0.6s ease-out forwards;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .logout-card p {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--dark);
+      margin-bottom: 20px;
+    }
+
+    .logout-btn {
+      padding: 10px 20px;
+      background: #ee0000;
+      color: var(--light);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+
+    .logout-btn:hover {
+      background: #dd0000;
+    }
+
+    @media screen and (max-width: 768px) {
+      .sidebar {
+        width: 200px;
+      }
+
+      .content {
+        width: calc(100% - 200px);
+        left: 200px;
+      }
+
+      .sidebar.close ~ .content {
+        width: 100%;
+        left: 0;
+      }
+    }
+
+    @media screen and (max-width: 576px) {
+      .sidebar {
+        width: 60px;
+      }
+
+      .content {
+        width: 100%;
+        left: 60px;
+      }
+
+      .sidebar.close ~ .content {
+        width: 100%;
+        left: 0;
+      }
+
+      .sidebar .side-menu li a {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .sidebar .logo {
+        text-align: center;
+      }
+    }
+    /* General Layout for the content-wrapper */
+    .content-wrapper {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px; /* Space between the sections */
+    }
+
+    /* Section Titles */
+    .management-title,
+    .utilities-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    /* Buttons Layout */
+    .management-items,
+    .utilities-items {
+      display: flex;
+      flex-direction: column; /* Make them stack vertically */
+      gap: 10px; /* Space between buttons */
+    }
+
+    /* Style for the buttons */
+    .management-button,
+    .utilities-button {
+      padding: 10px;
+      font-size: 16px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .management-button:hover,
+    .utilities-button:hover {
+      background-color: #2980b9;
+    }
+
+    /* Chart Section */
+    #chart-container {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Expense Chart Section */
+    .expense-chart-section {
+      margin-top: 40px;
+    }
+
+    .expense-chart-section h3 {
+      font-size: 22px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .chart-categories {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    .chart-categories li {
+      font-size: 16px;
+      margin: 5px 0;
+    }
+
+    .chart-categories li span {
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      margin-right: 10px;
+      border-radius: 50%;
+    }
+    /* Thêm vào CSS để bố trí phần Chi tiêu tháng 11 và Biểu đồ ngang nhau */
+    .expense-chart-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .expense-chart-section {
+      flex: 1;
+      padding-right: 20px;
+    }
+
+    #chart-container {
+      flex: 1;
+      max-width: 400px;
+      height: 400px;
+    }
+
+    /* Đảm bảo các mục trong biểu đồ chi tiêu được căn chỉnh đẹp mắt */
+    .chart-categories {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .chart-categories li {
+      margin: 5px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .chart-categories li span {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      border-radius: 50%;
+    }
+  </style>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <a href="#" class="logo">
+        <i class="bx bx-code-alt"></i>
+        <div class="logo-name"><span>TDH</span> Bank</div>
+      </a>
+      <ul class="side-menu">
+        <li>
+          <a href="home.html"><i class="bx bx-home"></i>Home</a>
+        </li>
+        <li>
+          <a href="wallet.html"><i class="bx bx-wallet"></i>Wallet</a>
+        </li>
+        <li>
+          <a href="transfer.html"><i class="bx bx-transfer-alt"></i>Transfer</a>
+        </li>
+        <li>
+          <a href="saving.html"><i class="bx bx-leaf"></i>Saving</a>
+        </li>
+        <li class="active">
+          <a href="user.html"><i class="bx bx-group"></i>Users</a>
+        </li>
+        <li>
+          <a href="historytransaction.html"
+            ><i class="bx bx-bell"></i>History</a
+          >
+        </li>
+        <li>
+          <a href="setting.html"><i class="bx bx-cog"></i>Settings</a>
+        </li>
+      </ul>
+      <ul class="side-menu">
+        <li>
+          <a href="logout.html" class="logout">
+            <i class="bx bx-log-out-circle"></i>Logout
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <!-- Navbar -->
+      <nav>
+        <i class="bx bx-menu"></i>
+        <form action="#">
+          <div class="form-input">
+            <input type="search" placeholder="Search..." />
+            <button class="search-btn" type="submit">
+              <i class="bx bx-search"></i>
+            </button>
+          </div>
+        </form>
+        <input type="checkbox" id="theme-toggle" hidden />
+        <label for="theme-toggle" class="theme-toggle"></label>
+        <a href="#" class="notif">
+          <i class="bx bx-bell"></i><span class="count">12</span>
+        </a>
+        <a href="#" class="profile">
+          <img src="img/logo.png" alt="Profile" />
+        </a>
+      </nav>
+
+      <!-- Main content -->
+      <main class="user-main-content">
+        <div class="user-header">
+          <div class="header-left">
+            <h1>User</h1>
+          </div>
+        </div>
+        <div class="user-main-container">
+          <!-- User Section -->
+          <div class="user-details">
+            <div class="user-avatar">
+              <img src="https://via.placeholder.com/80" alt="Avatar" />
+              <h2>Thân Văn Danh</h2>
+            </div>
+
+            <!-- Management Section -->
+            <div class="management-section">
+              <div class="management-title">QUẢN LÝ</div>
+              <div class="management-items">
+                <button class="management-button">Cài đặt thanh toán</button>
+                <button class="management-button">Đăng nhập và bảo mật</button>
+                <button class="management-button">Cài đặt thông báo</button>
+              </div>
+            </div>
+
+            <!-- Utilities Section -->
+            <div class="utilities-section">
+              <div class="utilities-title">TIỆN ÍCH</div>
+              <div class="utilities-items">
+                <button class="utilities-button">Quản lý chi tiêu</button>
+                <button class="utilities-button">Thanh toán hóa đơn</button>
+                <button class="utilities-button">Thẻ quà tặng</button>
+              </div>
+            </div>
+
+            <!-- Chart and Expense Section -->
+            <div class="expense-chart-wrapper">
+              <!-- Expense Section -->
+              <section class="expense-chart-section">
+                <h3>Chi tiêu tháng 11</h3>
+                <ul class="chart-categories">
+                  <li>
+                    <span style="background-color: #8e44ad"></span> Nhà cửa
+                    (22%)
+                  </li>
+                  <li>
+                    <span style="background-color: #e67e22"></span> Ăn uống
+                    (19%)
+                  </li>
+                  <li>
+                    <span style="background-color: #3498db"></span> Hóa đơn (9%)
+                  </li>
+                  <li>
+                    <span style="background-color: #2ecc71"></span> Còn lại
+                    (50%)
+                  </li>
+                </ul>
+              </section>
+
+              <!-- Chart Container -->
+              <div id="chart-container">
+                <!-- The canvas for the chart -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- JavaScript for drawing the chart -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = 400;
+        canvas.height = 400;
+        const ctx = canvas.getContext("2d");
+        document.getElementById("chart-container").appendChild(canvas);
+
+        const data = [
+          { label: "Nhà cửa", value: 22, color: "#8e44ad" },
+          { label: "Ăn uống", value: 19, color: "#e67e22" },
+          { label: "Hóa đơn", value: 9, color: "#3498db" },
+          { label: "Còn lại", value: 50, color: "#2ecc71" },
+        ];
+
+        let total = data.reduce((sum, item) => sum + item.value, 0);
+        let startAngle = 0;
+
+        data.forEach((item) => {
+          let sliceAngle = (item.value / total) * 2 * Math.PI;
+          ctx.beginPath();
+          ctx.moveTo(200, 200); // Start at the center
+          ctx.arc(200, 200, 150, startAngle, startAngle + sliceAngle);
+          ctx.closePath();
+          ctx.fillStyle = item.color;
+          ctx.fill();
+          startAngle += sliceAngle;
+        });
+      });
+    </script>
+
+    <script src="script.js"></script>
+  </body>
+</html> 
