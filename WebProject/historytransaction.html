@@ -1,71 +1,375 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="style.css">
-    <title>historytransaction</title>
-</head>
-<body>
-     <!-- Sidebar -->
-     <div class="sidebar">
-        <a href="#" class="logo">
-            <i class='bx bx-code-alt'></i>
-            <div class="logo-name"><span>TDH</span> Bank</div>
-        </a>
-        <ul class="side-menu">
-            <li><a href="home.html"><i class='bx bx-home'></i>Home</a></li>
-            <li><a href="wallet.html"><i class='bx bx-wallet'></i>Wallet</a></li>
-            <li><a href="transfer.html"><i class='bx bx-transfer-alt'></i>Transfer</a></li>
-            <li><a href="saving.html"><i class='bx bx-leaf'></i>Saving</a></li>
-            <li><a href="user.html"><i class='bx bx-group'></i>Users</a></li>
-            <li class="active"><a href="#"><i class='bx bx-bell'></i>History</a></li>
-            <li><a href="setting.html"><i class='bx bx-cog'></i>Settings</a></li>
-        </ul>
-        <ul class="side-menu">
-            <li>
-                <!-- gắn link vào nhé (Hoa) -->
-                <a href="logout.html" class="logout"> 
-                    <i class='bx bx-log-out-circle'></i>
-                    Logout
-                </a>
-            </li>
-        </ul>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>History Transaction</title>
+    <style>
+      /* Transaction History Container */
+      .transaction-history {
+        margin: 20px;
+        padding: 25px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        max-width: 900px;
+        font-family: "Roboto", sans-serif;
+      }
+
+      .transaction-history h2 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+
+      .transaction-history .date-range {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #7f8c8d;
+        margin-bottom: 20px;
+      }
+
+      /* Filter Section */
+      .filter-section {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .filter-button {
+        padding: 10px 20px;
+        border: 1px solid #dcdde1;
+        border-radius: 8px;
+        background-color: #f4f6f9;
+        color: #2c3e50;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .filter-button.active {
+        background-color: #3498db;
+        color: #ffffff;
+      }
+
+      .filter-button:hover {
+        background-color: #3498db;
+        color: #ffffff;
+      }
+
+      /* Table Styling */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+        margin-top: 10px;
+        background-color: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      table th,
+      table td {
+        padding: 15px;
+        text-align: left;
+      }
+
+      table th {
+        background-color: #f4f6f9;
+        color: #34495e;
+        font-weight: 600;
+      }
+
+      table tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      table tbody tr:hover {
+        background-color: #f0f4f8;
+      }
+
+      /* Transaction Status Styling */
+      .status {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .status i {
+        font-size: 16px;
+      }
+
+      .status.success i {
+        color: #27ae60;
+      }
+
+      .status.pending i {
+        color: #f39c12;
+      }
+
+      .status.failed i {
+        color: #e74c3c;
+      }
+
+      /* Amount Styling */
+      .amount {
+        font-weight: bold;
+        font-size: 1rem;
+      }
+
+      .amount.sent {
+        color: #e74c3c; /* Red for sent transactions */
+      }
+
+      .amount.received {
+        color: #27ae60; /* Green for received transactions */
+      } /* Style cho phần tìm kiếm */
+      .filter-section {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        align-items: center;
+      }
+
+      #search-transaction {
+        padding: 8px;
+        font-size: 1rem;
+        border-radius: 8px;
+        border: 1px solid #dcdde1;
+        outline: none;
+        max-width: 200px;
+      }
+
+      #search-btn {
+        padding: 8px 15px;
+        font-size: 1rem;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+
+      #search-btn:hover {
+        background-color: #2980b9;
+      }
+      /* Style cho cột Mã Giao Dịch */
+      table th:first-child,
+      table td:first-child {
+        width: 150px;
+        font-weight: bold;
+        color: #3498db;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <a href="#" class="logo">
+        <i class="bx bx-code-alt"></i>
+        <div class="logo-name"><span>TDH</span> Bank</div>
+      </a>
+      <ul class="side-menu">
+        <li>
+          <a href="home.html"><i class="bx bx-home"></i>Home</a>
+        </li>
+        <li>
+          <a href="wallet.html"><i class="bx bx-wallet"></i>Wallet</a>
+        </li>
+        <li>
+          <a href="transfer.html"><i class="bx bx-transfer-alt"></i>Transfer</a>
+        </li>
+        <li>
+          <a href="saving.html"><i class="bx bx-leaf"></i>Saving</a>
+        </li>
+        <li>
+          <a href="user.html"><i class="bx bx-group"></i>Users</a>
+        </li>
+        <li class="active">
+          <a href="#"><i class="bx bx-bell"></i>History</a>
+        </li>
+        <li>
+          <a href="setting.html"><i class="bx bx-cog"></i>Settings</a>
+        </li>
+      </ul>
+      <ul class="side-menu">
+        <li>
+          <a href="logout.html" class="logout">
+            <i class="bx bx-log-out-circle"></i>
+            Logout
+          </a>
+        </li>
+      </ul>
     </div>
     <!-- End of Sidebar -->
-         <!-- Main Content -->
+
+    <!-- Main Content -->
     <div class="content">
-        <!-- Navbar -->
-        <nav>
-            <i class='bx bx-menu'></i>
-            <form action="#">
-                <div class="form-input">
-                    <input type="search" placeholder="Search...">
-                    <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
-                </div>
-            </form>
-            <input type="checkbox" id="theme-toggle" hidden>
-            <label for="theme-toggle" class="theme-toggle"></label>
-            <a href="#" class="notif">
-                <i class='bx bx-bell'></i>
-                <span class="count">12</span>
-            </a>
-            <a href="#" class="profile">
-                <img src="img/logo.png">
-            </a>
-        </nav>
+      <!-- Navbar -->
+      <nav>
+        <i class="bx bx-menu"></i>
+        <form action="#">
+          <div class="form-input">
+            <input type="search" placeholder="Search..." />
+            <button class="search-btn" type="submit">
+              <i class="bx bx-search"></i>
+            </button>
+          </div>
+        </form>
+        <input type="checkbox" id="theme-toggle" hidden />
+        <label for="theme-toggle" class="theme-toggle"></label>
+        <a href="#" class="notif">
+          <i class="bx bx-bell"></i>
+          <span class="count">12</span>
+        </a>
+        <a href="#" class="profile">
+          <img src="img/logo.png" />
+        </a>
+      </nav>
+      <!-- End of Navbar -->
 
-        <!-- End of Navbar -->
+      <main>
+        <!-- Transaction History Section -->
+        <div class="transaction-history">
+          <h2>Transaction History</h2>
+          <p class="date-range">Tháng 11 năm 2024</p>
 
-        <main>
-            <div class="header">
-                <div class="left">
-                    <h1>History transaction</h1>
-                </div>
-        </main> 
-    </div>     
-                
+          <!-- Filter Section -->
+          <!-- Filter Section -->
+          <div class="filter-section">
+            <button class="filter-button active" data-filter="all">All</button>
+            <button class="filter-button" data-filter="sent">
+              Chuyển tiền
+            </button>
+            <button class="filter-button" data-filter="received">
+              Nhận tiền
+            </button>
 
-</body>
+            <!-- Thêm ô tìm kiếm giao dịch -->
+            <input
+              type="text"
+              id="search-transaction"
+              placeholder="Tìm kiếm giao dịch"
+            />
+            <button id="search-btn">Tìm kiếm</button>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Mã Giao Dịch</th>
+                <!-- Mới thêm cột Mã Giao Dịch -->
+                <th>Ngày</th>
+                <th>Số Tài Khoản</th>
+                <th>Loại Giao Dịch</th>
+                <th>Trạng Thái</th>
+                <th>Số Tiền</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Các giao dịch khác -->
+              <tr data-type="sent">
+                <td class="transaction-id"></td>
+                <!-- Chỗ để chèn mã giao dịch -->
+                <td>29/11/2024</td>
+                <td>1234567890</td>
+                <td>Chuyển đi</td>
+                <td class="status success">
+                  <i class="bx bx-check-circle"></i> Thành công
+                </td>
+                <td class="amount sent">-10,000</td>
+              </tr>
+              <tr data-type="received">
+                <td class="transaction-id"></td>
+                <!-- Chỗ để chèn mã giao dịch -->
+                <td>29/11/2024</td>
+                <td>0987654321</td>
+                <td>Nhận</td>
+                <td class="status success">
+                  <i class="bx bx-check-circle"></i> Thành công
+                </td>
+                <td class="amount received">+15,000</td>
+              </tr>
+              <!-- Các giao dịch khác -->
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      document
+        .getElementById("search-btn")
+        .addEventListener("click", function () {
+          const query = document
+            .getElementById("search-transaction")
+            .value.toLowerCase();
+          const rows = document.querySelectorAll("tbody tr");
+          const activeFilter = document
+            .querySelector(".filter-button.active")
+            .getAttribute("data-filter");
+
+          rows.forEach((row) => {
+            const transactionId = row
+              .querySelector("td")
+              .textContent.toLowerCase(); // Assuming the transaction ID is in the first <td>
+            const accountNumber = row
+              .querySelectorAll("td")[1]
+              .textContent.toLowerCase(); // Account number in second <td>
+
+            // Show rows matching search query and filter
+            if (
+              (transactionId.includes(query) ||
+                accountNumber.includes(query)) &&
+              (activeFilter === "all" ||
+                row.getAttribute("data-type") === activeFilter)
+            ) {
+              row.style.display = ""; // Show row
+            } else {
+              row.style.display = "none"; // Hide row
+            }
+          });
+        });
+
+      // Handle filter changes
+      const filterButtons = document.querySelectorAll(".filter-button");
+      const rows = document.querySelectorAll("tbody tr");
+
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          // Remove active class from all buttons
+          filterButtons.forEach((btn) => btn.classList.remove("active"));
+          // Add active class to clicked button
+          button.classList.add("active");
+
+          const filter = button.getAttribute("data-filter");
+          rows.forEach((row) => {
+            if (filter === "all" || row.getAttribute("data-type") === filter) {
+              row.style.display = "";
+            } else {
+              row.style.display = "none";
+            }
+          });
+        });
+      });
+      // Hàm tạo mã giao dịch ngẫu nhiên
+      function generateTransactionId() {
+        return "TX-" + Math.random().toString(36).substr(2, 9).toUpperCase();
+      }
+
+      // Thêm mã giao dịch vào các hàng giao dịch
+      document.querySelectorAll("tbody tr").forEach((row) => {
+        const transactionIdCell = row.querySelector(".transaction-id");
+        if (transactionIdCell) {
+          transactionIdCell.textContent = generateTransactionId(); // Chèn mã giao dịch vào
+        }
+      });
+    </script>
+  </body>
 </html>
