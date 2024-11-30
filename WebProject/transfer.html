@@ -878,11 +878,11 @@ document.getElementById('toggle-balance').onclick = function() {
 // Hàm tải dữ liệu từ chuỗi tĩnh
 function loadBeneficiaryData() {
     const data = `
-        Ngân hàng Agribank	Phùng Thị Minh Thư	23130317
-        Ngân hàng MB Bank	Nguyễn Văn Điền	23130061
-        Ngân hàng BIDV		Thân Văn Danh	23130043
-        Ngân hàng BIDV		Lại Thị Hoa	23130111
-        Ngân hàng BIDV		Nguyễn Văn Đô	23130063
+        Ngân hàng Agribank,Phùng Thị Minh Thư,23130317
+        Ngân hàng MB Bank,Nguyễn Văn Điền,23130061
+        Ngân hàng BIDV,Thân Văn Danh,23130043
+        Ngân hàng BIDV,Lại Thị Hoa,23130111
+        Ngân hàng BIDV,Nguyễn Văn Đô,23130063
     `;
 
     processBeneficiaryData(data.trim()); // Gửi dữ liệu tới hàm xử lý
@@ -894,7 +894,7 @@ function processBeneficiaryData(content) {
     beneficiaryData = []; // Khởi tạo lại mảng beneficiaryData
 
     lines.forEach(line => {
-        const [bank, name, account] = line.split('\t'); // Tách theo tab
+        const [bank, name, account] = line.split(','); // Tách theo dấu phẩy
         if (bank && name && account) {
             beneficiaryData.push({
                 bank: bank.trim(),
@@ -906,6 +906,9 @@ function processBeneficiaryData(content) {
 
     console.log(beneficiaryData); // Kiểm tra dữ liệu đã được tải vào beneficiaryData
 }
+
+// Gọi hàm để chạy và kiểm tra
+loadBeneficiaryData();
 
 // Hàm cập nhật tên người thụ hưởng khi nhập tài khoản và chọn ngân hàng
 function updateBeneficiaryName() {
