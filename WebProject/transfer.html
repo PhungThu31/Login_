@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="style.css">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <title>Transfer</title>
     <style>
-        /* Css chế độ tối */
        /* Phần Chuyển Tiền */
 /* Phần Chuyển Tiền */
 body.dark #transfer-section {
@@ -102,7 +102,7 @@ body.dark #otp-popup #otp-code-display {
 body.dark #otp-popup #otp-code {
     font-size: 30px;
     font-weight: bold;
-    margin-top: 10px;
+margin-top: 10px;
 }
 
 /* Phương thức xác nhận */
@@ -328,7 +328,7 @@ body.dark .auth-method button:hover {
     font-size: 1.5rem;
     color: #333;
     flex-grow: 1; /* Tiêu đề sẽ chiếm toàn bộ không gian giữa */
-    text-align: center; /* Căn giữa nội dung tiêu đề */
+text-align: center; /* Căn giữa nội dung tiêu đề */
 }
 
 .back-btn {
@@ -474,8 +474,7 @@ body.dark .auth-method button:hover {
    /* Nền mờ khi khung OTP hiển thị */
 /* Popup OTP */
 #otp-popup {
-    position: absolute; /* Định vị dựa trên container cha */
-    top: 50%; /* Căn giữa theo chiều dọc */
+    position: absolute; /* Định vị dựa trên container cha */top: 50%; /* Căn giữa theo chiều dọc */
     left: 50%; /* Căn giữa theo chiều ngang */
     transform: translate(-50%, -50%); /* Đưa popup về đúng giữa container */
     width: 300px; /* Độ rộng popup */
@@ -549,7 +548,7 @@ body.dark .auth-method button:hover {
      <div class="sidebar">
         <a href="#" class="logo">
             <i class='bx bx-code-alt'></i>
-            <div class="logo-name"><span>TDH</span> Bank</div>
+        <div class="logo-name"><span>TDH</span> Bank</div>
         </a>
         <ul class="side-menu">
             <li><a href="home.html"><i class='bx bx-home'></i>Home</a></li>
@@ -578,8 +577,7 @@ body.dark .auth-method button:hover {
             <i class='bx bx-menu'></i>
             <form action="#">
                 <div class="form-input">
-                    <input type="search" placeholder="Search...">
-                    <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
+                    <input type="search" placeholder="Search..."> <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
                 </div>
             </form>
             <input type="checkbox" id="theme-toggle" hidden>
@@ -592,14 +590,17 @@ body.dark .auth-method button:hover {
                 <img src="img/logo.png">
             </a>
         </nav>
+
+        
         <!-- End of Navbar -->
 
 
-        <main>
+        <main  class="container py-5">
+            <h2 class="text-center mb-4">Chuyển tiền</h2>
             <!-- Phần Chuyển Tiền -->
             <div id="transfer-section">
                 <!-- Từ tài khoản nguồn -->
-                <div class="form-section">
+                <div class="form-section" >
                     <label for="source-account">Từ tài khoản nguồn</label>
                     <div class="account-info">
                         <input type="text" id="source-account" value="3777149" placeholder="Số tài khoản người gửi" readonly required>
@@ -630,8 +631,12 @@ body.dark .auth-method button:hover {
                         type="text" 
                         id="beneficiary-account" 
                         placeholder="Nhập tài khoản thụ hưởng" 
+                        title="23130317"
                         oninput="updateBeneficiaryName()" 
-                        required>
+                        required
+                        autocomplete="on" 
+                        autofocus
+                        onkeydown="moveToAmount(event)">
                 </div>
                 <div class="form-section">
                     <label for="beneficiary-name">Tên người thụ hưởng:</label>
@@ -639,28 +644,43 @@ body.dark .auth-method button:hover {
                         type="text" 
                         id="beneficiary-name" 
                         placeholder="Tên người thụ hưởng" 
-                        disabled>
+                        disabled
+                        >
                 </div>
             
                 <!-- Số tiền chuyển -->
-                <div class="form-section">
-                    <label for="amount">Số tiền chuyển:</label>
-                    <input type="number" id="amount" placeholder="Nhập số tiền" required>
+                <div class="form-section"><label for="amount">Số tiền chuyển:</label>
+                    <input 
+                        type="number" 
+                        id="amount" 
+                        placeholder="Nhập số tiền" 
+                        required
+                        autocomplete="on"
+                        onkeydown="moveToDescription(event)">
                 </div>
-            
+
                 <!-- Nội dung chuyển tiền -->
                 <div class="form-section">
                     <label for="message">Nội dung chuyển tiền:</label>
                     <input 
                         type="text" 
                         id="message" 
-                        placeholder="Nhập nội dung chuyển tiền" >
+                        placeholder="Nhập nội dung chuyển tiền" 
+                        required
+                        autocomplete="on"
+                        onkeydown="submitOnEnter(event)">
                 </div>
             
                 <!-- Nút tiếp tục -->
                 <div class="form-section">
-                    <button type="button" onclick="goToConfirmation()">Tiếp tục</button>
+                    <button id="continue-button" type="continue-button" class="btn btn-primary w-100"style="height: 50px;" onclick="handleContinue(event)">Tiếp tục</button>
                 </div>
+                <div id="error-message" style="display: none; color: red;">
+                    Vui lòng điền đầy đủ thông tin.
+                </div>
+                
+
+                
             </div>
         
             <!-- Phần Xác thực giao dịch -->
@@ -706,50 +726,138 @@ body.dark .auth-method button:hover {
                     <div class="input-group">
                         <input type="text" id="otp" placeholder="Nhập mã OTP" required>
                     </div>
-                    <div class="button-group">
-                        <button type="button" onclick="sendOtp()">Gửi mã OTP</button>
+                    <div class="button-group"><button type="button" onclick="sendOtp()">Gửi mã OTP</button>
                         <button type="button" onclick="confirmTransaction()">Xác nhận</button>
                     </div>
                 </div>
                 
             </div>
             
-            <!-- Khung hiển thị mã OTP -->
-            <div id="otp-popup" style="display: none;">
-                <div class="otp-popup-content">
-                    <p id="otp-code-display">Mã OTP của bạn</p>
-                    <div><span id="otp-code"></span></div>
-                    <button onclick="closeOtpPopup()" class="close-btn">X</button>
-                </div>
-            </div>
         </main>
         
         
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+// Hàm xử lý khi nhấn nút "Tiếp tục"
+function handleContinue(event) {
+    event.preventDefault();  // Ngăn chặn chuyển trang
+    console.log("Nút tiếp tục đã được nhấn");  // Kiểm tra sự kiện
+    
+    if (validateForm()) {
+        goToConfirmation();
+    } else {
+        alert("Vui lòng điền đầy đủ thông tin.");  // Thông báo nếu form chưa hợp lệ
+    }
+}
 
-        // Ẩn/Hiện số dư tài khoản
-        document.getElementById('toggle-balance').onclick = function() {
-            let balanceField = document.getElementById('source-balance');
-            if (balanceField.type === "password") {
-                balanceField.type = "text"; // Hiện số dư
-                balanceField.value = "300000 VND"; // Giả lập số dư tài khoản
-            } else {
-                balanceField.type = "password"; // Ẩn số dư
-                balanceField.value = "*** VND"; 
+
+
+  // Tạo OTP giả lập
+  function generateOTP() {
+    return Math.floor(100000 + Math.random() * 900000); // OTP 6 chữ số ngẫu nhiên
+}
+
+let otpCode; // Biến lưu mã OTP hiện tại
+
+// Hàm gửi OTP (tự động điền mã vào trường nhập OTP với mã ngẫu nhiên mới)
+function sendOtp() {
+    otpCode = generateOTP(); // Tạo mã OTP mới mỗi khi nhấn nút
+    document.getElementById('otp').value = otpCode; // Điền mã OTP vào trường nhập
+    // alert(`Mã OTP đã được gửi: ${otpCode}`); // Hiển thị thông báo mã OTP
+}
+
+// Hàm xác nhận giao dịch (kiểm tra OTP)
+function confirmTransaction() {
+    const otpInput = document.getElementById('otp'); // Trường nhập OTP
+    const otp = otpInput.value;
+
+    if (otp === otpCode.toString()) {
+        alert('Giao dịch thành công!');
+        // Reset trường nhập mã OTP
+        otpInput.value = '';
+
+        // Quay lại phần Chuyển tiền sau khi giao dịch thành công
+        document.getElementById('transfer-section').style.display = 'block';
+        document.getElementById('confirmation').style.display = 'none';
+    } else {
+        alert('Mã OTP sai, yêu cầu nhập lại!');
+        // Reset trường nhập mã OTP nếu cần thiết
+        otpInput.value = '';
+    }
+}
+
+
+// Hàm kiểm tra các trường input
+function validateForm() {
+    const amount = document.getElementById('amount').value.trim();
+    const message = document.getElementById('message').value.trim();
+    let isValid = true; // Biến theo dõi trạng thái hợp lệ
+
+    console.log("Kiểm tra form...");
+    // Kiểm tra các điều kiện ở đây
+    return true;  // Hoặc false nếu form không hợp lệ
+
+    // Kiểm tra trường Số tiền chuyển
+    if (amount === '') {
+        alert('Vui lòng nhập số tiền chuyển.');
+        isValid = false;
+    } else if (Number(amount) <= 0) {
+        alert('Số tiền chuyển phải lớn hơn 0.');
+        isValid = false;
+    }
+
+    // Kiểm tra trường Nội dung chuyển tiền
+    if (message === '') {
+        alert('Vui lòng nhập nội dung chuyển tiền.');
+        isValid = false;
+    }
+
+    return isValid;
+}
+
+// Hàm để chuyển con trỏ sang trường nhập tiếp theo khi nhấn Enter
+function setupEnterToNextInput() {
+    const inputs = document.querySelectorAll('input'); // Lấy tất cả các trường input
+    inputs.forEach((input, index) => {
+        input.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') { // Kiểm tra nếu phím Enter được nhấn
+event.preventDefault(); // Ngăn hành động mặc định của Enter
+                const nextInput = inputs[index + 1]; // Lấy trường nhập tiếp theo
+                if (nextInput && !nextInput.disabled) {
+                    nextInput.focus(); // Chuyển con trỏ đến trường tiếp theo
+                }
             }
-        }; 
+        });
+    });
+}
+
+// Gọi hàm khi DOM đã sẵn sàng
+document.addEventListener('DOMContentLoaded', setupEnterToNextInput);
+
+// Hàm ẩn/hiện số dư tài khoản
+document.getElementById('toggle-balance').onclick = function() {
+    let balanceField = document.getElementById('source-balance');
+    if (balanceField.type === "password") {
+        balanceField.type = "text"; // Hiện số dư
+        balanceField.value = "30000000 VND"; // Giả lập số dư tài khoản
+    } else {
+        balanceField.type = "password"; // Ẩn số dư
+        balanceField.value = "*** VND"; 
+    }
+};
 
 
+
+//
 
 
 
         // Dữ liệu về ngân hàng và logo
         const banks = [
-            { name: "Ngân hàng TMCP Ngoại Thương Việt Nam", logo: "img/vietcombank.jpeg" },
             { name: "Ngân hàng Agribank", logo: "img/agribank.jpg" },
-            { name: "Ngân hàng MB Bank", logo: "img/mbbank.jpg" },
             { name: "Ngân hàng BIDV", logo: "img/BIDV.png" },
+            { name: "Ngân hàng TMCP Ngoại Thương Việt Nam", logo: "img/vietcombank.jpeg" },
+            { name: "Ngân hàng MB Bank", logo: "img/mbbank.jpg" },
             { name: "Ngân hàng Sacombank", logo: "img/scb.jpg" },
             { name: "Ngân hàng Techcombank", logo: "img/tcb.jpg" },
             { name: "Ngân hàng TPBank", logo: "img/tpb.jpg" },
@@ -785,63 +893,67 @@ body.dark .auth-method button:hover {
                 
                 // Cập nhật giá trị của dropdown khi nhấp vào logo
                 dropdown.value = selectedBank;
-            }
-        });
+            }});
+        
 
 
 
        
+ let beneficiaryData = []; // Chứa dữ liệu bao gồm ngân hàng, tên và số tài khoản
 
-        let beneficiaryData = []; // Chứa dữ liệu bao gồm ngân hàng, tên và số tài khoản
+// Hàm tải dữ liệu từ chuỗi tĩnh
+function loadBeneficiaryData() {
+    const data = `
+        Ngân hàng Agribank,Phùng Thị Minh Thư,23130317
+        Ngân hàng MB Bank,Nguyễn Văn Điền,23130061
+        Ngân hàng BIDV,Thân Văn Danh,23130043
+        Ngân hàng BIDV,Lại Thị Hoa,23130111
+        Ngân hàng BIDV,Nguyễn Văn Đô,23130063
+    `;
 
-        // Hàm tải file từ thư mục và lưu vào beneficiaryData
-        function loadBeneficiaryData() {
-            fetch('/Bank.txt') // Đường dẫn đến file trong thư mục
-                .then(response => response.text()) // Đọc file dưới dạng text
-                .then(data => processBeneficiaryData(data)) // Xử lý dữ liệu sau khi tải xong
-                .catch(error => console.error('Lỗi khi tải file:', error));
-        }
+    processBeneficiaryData(data.trim()); // Gửi dữ liệu tới hàm xử lý
+}
 
-        // Hàm xử lý dữ liệu trong file
-        function processBeneficiaryData(content) {
-            const lines = content.split('\n'); // Tách theo dòng
-            beneficiaryData = []; // Khởi tạo lại mảng beneficiaryData
+// Hàm xử lý dữ liệu trong chuỗi
+function processBeneficiaryData(content) {
+    const lines = content.split('\n'); // Tách theo dòng
+    beneficiaryData = []; // Khởi tạo lại mảng beneficiaryData
 
-            lines.forEach(line => {
-                const [bank, name, account] = line.split('\t'); // Tách theo tab
-                if (bank && name && account) {
-                    beneficiaryData.push({
-                        bank: bank.trim(),
-                        name: name.trim(),
-                        account: account.trim(),
-                    });
-                }
+    lines.forEach(line => {
+        const [bank, name, account] = line.split(','); // Tách theo dấu phẩy
+        if (bank && name && account) {
+            beneficiaryData.push({
+                bank: bank.trim(),
+                name: name.trim(),
+                account: account.trim(),
             });
-
-            console.log(beneficiaryData); // Kiểm tra dữ liệu đã được tải vào beneficiaryData
         }
+    });
 
-        // Hàm cập nhật tên người thụ hưởng khi nhập tài khoản và chọn ngân hàng
-        function updateBeneficiaryName() {
-            const accountInput = document.getElementById('beneficiary-account').value.trim(); // Số tài khoản
-            const selectedBank = document.querySelector('.dropdown').value; // Ngân hàng đã chọn
-            const beneficiaryNameInput = document.getElementById('beneficiary-name'); // Trường tên người thụ hưởng
+    console.log(beneficiaryData); // Kiểm tra dữ liệu đã được tải vào beneficiaryData
+}
 
-            // Tìm thông tin người thụ hưởng với cả ngân hàng và số tài khoản
-            const beneficiary = beneficiaryData.find(
-                entry => entry.bank === selectedBank && entry.account === accountInput
-            );
-
-            // Hiển thị tên người thụ hưởng hoặc thông báo không tìm thấy
-            beneficiaryNameInput.value = beneficiary ? beneficiary.name : "Không tìm thấy";
-        }
-
-            // Tải dữ liệu khi trang được tải
-            window.onload = loadBeneficiaryData;
-
- 
+// Gọi hàm để chạy và kiểm tra
+loadBeneficiaryData();
 
 
+// Hàm cập nhật tên người thụ hưởng khi nhập tài khoản và chọn ngân hàng
+function updateBeneficiaryName() {
+    const accountInput = document.getElementById('beneficiary-account').value.trim(); // Số tài khoản
+    const selectedBank = document.querySelector('.dropdown').value; // Ngân hàng đã chọn
+    const beneficiaryNameInput = document.getElementById('beneficiary-name'); // Trường tên người thụ hưởng
+
+    // Tìm thông tin người thụ hưởng với cả ngân hàng và số tài khoản
+    const beneficiary = beneficiaryData.find(
+        entry => entry.bank === selectedBank && entry.account === accountInput
+    );
+
+    // Hiển thị tên người thụ hưởng hoặc thông báo không tìm thấy
+    beneficiaryNameInput.value = beneficiary ? beneficiary.name : "Không tìm thấy";
+}
+
+// Tải dữ liệu khi trang được tải
+window.onload = loadBeneficiaryData;
 
             // Hàm chuyển đến xác thực giao dịch
             function goToConfirmation() {
@@ -875,61 +987,112 @@ body.dark .auth-method button:hover {
             }
 
             function returnToTransfer() {
-    // Lấy phần tử phần chuyển tiền
-    var transferSection = document.getElementById("transfer-section");
-    
-    // Kiểm tra nếu phần tử tồn tại
-    if (transferSection) {
-        // Hiển thị lại phần chuyển tiền
-        transferSection.style.display = 'block';
+            // Lấy phần tử phần chuyển tiền
+            var transferSection = document.getElementById("transfer-section");
+            
+            // Kiểm tra nếu phần tử tồn tại
+            if (transferSection) {
+                // Hiển thị lại phần chuyển tiền
+                transferSection.style.display = 'block';
 
-        // Ẩn phần xác thực giao dịch
-        var confirmationSection = document.getElementById("confirmation");
-        confirmationSection.style.display = 'none';
+                // Ẩn phần xác thực giao dịch
+                var confirmationSection = document.getElementById("confirmation");
+                confirmationSection.style.display = 'none';
 
-        // Cuộn trang về phần chuyển tiền
-        transferSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    } else {
-        console.error("Không tìm thấy phần tử với ID 'transfer-section'");
+                // Cuộn trang về phần chuyển tiền
+                transferSection.scrollIntoView({ behavior: "smooth", block: "start" });
+            } else {
+                console.error("Không tìm thấy phần tử với ID 'transfer-section'");
+            }
+        }
+
+
+
+        // Hàm xử lý khi nhấn nút "Tiếp tục"
+        function handleContinue(event) {
+            event.preventDefault();  // Ngăn chặn hành động submit mặc định của form
+            if (validateForm()) {
+                goToConfirmation();
+            } else {
+                document.getElementById('error-message').style.display = 'block'; // Hiển thị thông báo lỗi
+            }
+        }
+
+// Hàm kiểm tra các trường input
+function validateForm() {
+    const amount = document.getElementById('amount').value.trim();
+    const message = document.getElementById('message').value.trim();
+    const beneficiaryAccount = document.getElementById('beneficiary-account').value.trim();
+    const beneficiaryName = document.getElementById('beneficiary-name').value.trim();
+    let isValid = true; // Biến theo dõi trạng thái hợp lệ
+
+    // Kiểm tra các trường input
+    if (amount === '') {
+        isValid = false;
+    } else if (Number(amount) <= 0) {
+        isValid = false;
+    }
+
+    if (message === '') {
+        isValid = false;
+    }
+
+    if (beneficiaryAccount === '') {
+        isValid = false;
+    }
+
+    if (beneficiaryName === '') {
+        isValid = false;
+    }
+
+    return isValid;
+}
+
+// Hàm ẩn thông báo lỗi khi người dùng sửa dữ liệu
+function resetErrorMessage() {
+    document.getElementById('error-message').style.display = 'none';
+}
+
+// Cập nhật sự kiện để ẩn thông báo lỗi khi người dùng bắt đầu nhập lại thông tin
+document.querySelectorAll('input').forEach(input => {
+    input.addEventListener('input', resetErrorMessage);
+});
+
+// Thêm sự kiện cho nút "Tiếp tục"
+document.getElementById("continue-button").addEventListener("click", handleContinue);
+
+function moveToAmount(event) {
+    // Kiểm tra nếu phím nhấn là Enter (keyCode 13)
+    if (event.key === 'Enter') {
+        // Ngừng hành động mặc định của phím Enter (để tránh form submit)
+        event.preventDefault();
+        // Chuyển focus đến trường "Số tiền chuyển"
+        document.getElementById('amount').focus();
+    }
+}
+function moveToDescription(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        document.getElementById('message').focus();
+    }
+}
+function submitOnEnter(event) {
+    // Kiểm tra nếu phím Enter (keyCode 13) được nhấn
+    if (event.key === 'Enter') {
+        // Ngừng hành động mặc định của Enter (không tạo thêm dòng mới)
+        event.preventDefault();
+        
+        // Tìm và click vào nút Tiếp tục
+        document.getElementById('continue-button').click();
     }
 }
 
+// Gọi hàm khi DOM đã sẵn sàng
+document.addEventListener('DOMContentLoaded', setupEnterToNextInput);
 
 
 
-           // Tạo OTP giả lập
-    function generateOTP() {
-        return Math.floor(100000 + Math.random() * 900000); // OTP 6 chữ số ngẫu nhiên
-    }
 
-    let otpCode = generateOTP();
-
-    // Hàm gửi OTP
-    function sendOtp() {
-        // Hiển thị popup với mã OTP
-        document.getElementById('otp-code').textContent = otpCode;
-        document.getElementById('otp-popup').style.display = 'block';
-    }
-
-    // Đóng khung popup khi nhấn "X"
-    function closeOtpPopup() {
-        document.getElementById('otp-popup').style.display = 'none';
-    }
-
-    // Hàm xác nhận giao dịch (kiểm tra OTP)
-    function confirmTransaction() {
-    const otp = document.getElementById('otp').value;
-    if (otp === otpCode.toString()) {
-        alert('Giao dịch thành công!');
-        // Quay lại phần Chuyển tiền sau khi giao dịch thành công
-        document.getElementById('transfer-section').style.display = 'block';
-        document.getElementById('confirmation').style.display = 'none';
-    } else {
-        alert('Mã OTP sai, yêu cầu nhập lại!');
-    }
-}
-
-    
 
 
     </script>
