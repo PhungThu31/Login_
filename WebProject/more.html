@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saving</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family:  'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        .news-container {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        .news-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 20px;
+        }
+
+        .news-content {
+            flex: 1;
+        }
+
+        .news-title {
+            font-size: 20px;
+            margin: 5px 0;
+            color: #f1c40f;
+            line-height: 1.4;
+        }
+
+        .news-description {
+            font-size: 16px;
+            color: #bbb;
+            margin: 10px 0;
+        }
+
+        .news-author {
+            font-size: 14px;
+            color: #999;
+            margin-top: 10px;
+        }
+
+        .news-image {
+            width: 250px;
+            height: 200px;
+            object-fit: cover;
+            margin-left: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .see-more {
+            background: none;
+            border: none;
+            color: #007bff;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 5px;
+            padding: 0;
+            text-decoration: underline;
+        }
+
+        .see-more:hover {
+            color: #0056b3;
+        }
+
+        ul {
+            margin: 10px 0;
+            padding-left: 20px;
+            list-style: disc;
+        }
+
+        ul li {
+            margin-bottom: 5px;
+        }
+
+        header {
+            text-align: center;
+            background-color: #333;
+            color: #f1c40f;
+            height: 80px;
+            width: 100%;
+        }
+
+        header h2 {
+            padding: 10px;
+            font-size: 50px;
+        }
+
+        button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 10px;
+            cursor: pointer; 
+            font-size: 15px;
+        }
+
+        footer {
+            background-color: #333;
+            color: #f1c40f;
+            text-align: center;
+            padding: 20px 10px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #f1c40f;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>Savings Deposit</h2>
+    </header>
+    <button onclick="window.history.back()">Back home</button>
+    <div class="news-container">
+        <!-- News Items -->
+        <div class="news-item">
+            <div class="news-content">
+                <h2 class="news-title">Fixed-Term Savings: Key Features and Benefits</h2>
+                <p class="news-description">
+                    <ul>
+                        <li><strong>Flexibility in Transactions:</strong> Customers can perform transactions at any branch or transaction office of the bank.</li>
+                        <li><strong>Customizable Terms:</strong> Deposit terms and interest payment methods can be chosen based on the customer's needs.</li>
+                        <li><strong>Stable Interest Rates:</strong> Offers fixed interest rates for the deposit term, allowing customers to secure stable income during the term.</li>
+                        <li><strong>Loan Collateral:</strong> Savings account balance can be used as collateral for loans or other financial purposes.</li>
+                        <li><strong>Deposit Amounts:</strong> Minimum deposit amount varies depending on the bank's policy.</li>
+                        <li><strong>Automatic Renewal:</strong> Upon maturity, the savings can be automatically renewed with the same term and updated interest rate unless instructed otherwise.</li>
+                        <li><strong>Premature Withdrawals:</strong> Early withdrawal is allowed, but interest rates may be lower or calculated at demand deposit rates.</li>
+                    </ul>
+                </p>
+                <p class="news-author">By BANK TEAM</p>
+            </div>
+            <img src="img/saving_1.png" alt="Fixed-Term Savings" class="news-image">
+        </div>
+        <div class="news-item">
+            <div class="news-content">
+                <h2 class="news-title">Non-fixed-term Savings: Key Features and Benefits</h2>
+                <p class="news-description">
+                    <ul>
+                        <li><strong>High Flexibility:</strong> Customers can withdraw or deposit money at any time without prior notice.</li>
+                        <li><strong>Lower Interest Rates:</strong> Interest rates are typically lower compared to fixed-term savings accounts due to the high liquidity.</li>
+                        <li><strong>Convenient Transactions:</strong> Customers can access their savings easily through various channels such as online banking, ATMs, or transaction offices.</li>
+                        <li><strong>No Minimum Term:</strong> Unlike fixed-term savings, there is no required commitment to a specific term, making it suitable for short-term or emergency funds.</li>
+                        <li><strong>Interest Calculation:</strong> Interest is usually calculated daily and credited to the account monthly or based on the bank's policy.</li>
+                        <li><strong>Ideal for Emergency Funds:</strong> This account type is perfect for individuals who want quick access to their funds while still earning some interest.</li>
+                    </ul>
+                </p>
+                <p class="news-author">By BANK TEAM</p>
+            </div>
+            <img src="img/saving_2.png" alt="Non-fixed-term Savings" class="news-image">
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Bank Team. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+</body>
+</html>

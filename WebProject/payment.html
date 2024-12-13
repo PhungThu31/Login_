@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trang Thanh Toán</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* Thanh điều hướng (Navbar) */
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #fff;
+        padding: 10px 20px;
+        border-bottom: 2px solid #f1f1f1;
+      }
+
+      .navbar .logo {
+        width: 50px;
+        height: 50px;
+        background-image: url("logo.png"); /* Đổi với logo của bạn */
+        background-size: cover;
+        background-position: center;
+      }
+
+      .navbar .menu {
+        display: flex;
+        gap: 20px;
+      }
+
+      .navbar .menu a {
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      .navbar .search-box {
+        display: flex;
+        align-items: center;
+      }
+
+      .navbar .search-box input {
+        padding: 5px;
+        margin-right: 10px;
+        font-size: 14px;
+      }
+
+      /* Các dịch vụ trong navbar */
+      .service-item {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .service-item:hover i {
+        transform: scale(1.3); /* Phóng to biểu tượng khi hover */
+        color: #f44336; /* Đổi màu biểu tượng */
+        transition: transform 0.3s, color 0.3s;
+      }
+
+      .service-item:hover::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        background-color: #f44336;
+        bottom: 0;
+        left: 0;
+        animation: underline 0.3s forwards;
+      }
+
+      @keyframes underline {
+        from {
+          width: 0;
+        }
+        to {
+          width: 100%;
+        }
+      }
+      @media (max-width: 768px) {
+        .navbar .menu {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .services {
+          flex-wrap: wrap;
+        }
+
+        .service-item {
+          flex: 1 1 calc(50% - 10px); /* 2 cột trên màn hình nhỏ */
+        }
+
+        .moving-background {
+          height: 300px; /* Giảm chiều cao nền cho màn hình nhỏ */
+        }
+      }
+
+      /* Nền chuyển động */
+      .moving-background {
+        width: 100%; /* Chiếm toàn bộ chiều rộng của phần tử cha */
+        height: 600px; /* Chiều cao có thể thay đổi theo ý muốn */
+        position: relative;
+        overflow: hidden; /* Đảm bảo rằng ảnh nền không bị tràn ra ngoài */
+      }
+
+      /* Các ảnh nền */
+      .background-image {
+        width: 100%; /* Chiếm toàn bộ chiều rộng */
+        height: 100%; /* Chiếm toàn bộ chiều cao */
+        background-size: 100% 100%;
+
+        background-position: center; /* Đảm bảo ảnh nền được căn giữa */
+        position: absolute; /* Đảm bảo ảnh nằm trong phần tử cha */
+        top: 0;
+        left: 0;
+        z-index: -1; /* Đặt ảnh nền dưới các phần tử khác */
+        transition: transform 1s ease; /* Hiệu ứng chuyển động khi thay đổi ảnh nền */
+      }
+      .background-image {
+        transition: opacity 1s ease, transform 1s ease; /* Thêm hiệu ứng mờ */
+      }
+
+      .background-image.active {
+        opacity: 1;
+        transform: translateX(0); /* Vẫn giữ ảnh đang hiện */
+      }
+
+      /* Đặt ảnh nền cho 2 ảnh khác nhau */
+      .background-image:nth-child(1) {
+        background-image: url("./img/background1.jpg"); /* Thay bằng ảnh của bạn */
+      }
+
+      .background-image:nth-child(2) {
+        background-image: url("./img/stons.jpg"); /* Thay bằng ảnh của bạn */
+      }
+
+      /* Các nút điều khiển */
+      .controls {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(-50%);
+      }
+
+      .control-button {
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        font-size: 24px;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .control-button:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+      }
+      /* Giới thiệu về TDH Bank */
+      .about-tdhbank {
+        padding: 40px 20px;
+        max-width: 800px;
+        margin: 0 auto; /* Căn giữa phần giới thiệu */
+        background-color: #f9f9f9; /* Màu nền nhẹ */
+        border-radius: 8px; /* Bo góc nhẹ */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+      }
+
+      .about-tdhbank h2 {
+        font-size: 28px;
+        color: #333;
+        text-align: center; /* Căn giữa tiêu đề */
+        margin-bottom: 20px;
+      }
+
+      .about-tdhbank h3 {
+        font-size: 20px;
+        color: #444;
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+
+      .about-tdhbank p {
+        font-size: 16px;
+        line-height: 1.6;
+        color: #555;
+        margin-bottom: 20px;
+        text-align: justify; /* Căn đều văn bản */
+      }
+
+      .about-tdhbank ul {
+        margin-left: 20px;
+        list-style: disc;
+      }
+
+      .about-tdhbank ul li {
+        font-size: 16px;
+        color: #555;
+        margin-bottom: 10px;
+      }
+
+      .about-tdhbank strong {
+        color: #f44336; /* Tô đậm với màu đỏ nổi bật */
+      } /* Nút Thanh Toán Ngay */
+      .payment-button {
+        position: fixed;
+        bottom: 20px; /* Cách đáy 20px */
+        right: 20px; /* Cách cạnh phải 20px */
+        z-index: 1000; /* Đảm bảo luôn nổi lên trên */
+      }
+
+      .payment-button .btn-payment {
+        background-color: #2980b9; /* Màu hồng nổi bật */
+        color: #fff; /* Màu chữ trắng */
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 30px; /* Bo tròn nút */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Đổ bóng nút */
+        transition: all 0.3s ease; /* Hiệu ứng khi hover */
+      }
+
+      .payment-button .btn-payment:hover {
+        background-color: #2980b9; /* Màu đậm hơn khi hover */
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3); /* Đổ bóng mạnh hơn */
+        transform: scale(1.05); /* Tăng nhẹ kích thước khi hover */
+      }
+      .payment-button.hidden {
+        opacity: 0;
+        pointer-events: none; /* Không cho phép tương tác khi bị ẩn */
+        transition: opacity 0.3s ease-in-out;
+      }
+
+      .payment-button.visible {
+        opacity: 1;
+        pointer-events: auto; /* Bật tương tác */
+        transition: opacity 0.3s ease-in-out;
+      }
+      /*toiuu*/
+
+      @media (max-width: 768px) {
+        .payment-button {
+          bottom: 10px; /* Điều chỉnh vị trí */
+          right: 10px;
+        }
+
+        .btn-payment {
+          font-size: 14px; /* Giảm kích thước nút */
+          padding: 8px 15px;
+        }
+      }
+      .footer {
+        background-color: #181818;
+        color: white;
+        padding: 40px 20px;
+      }
+
+      .footer-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      .footer-column {
+        flex: 1;
+        min-width: 200px;
+        margin: 10px;
+      }
+
+      .footer-column h3 {
+        color: #f2a900;
+        margin-bottom: 20px;
+      }
+
+      .footer-column ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .footer-column ul li {
+        margin-bottom: 10px;
+      }
+
+      .footer-column ul li a {
+        color: white;
+        text-decoration: none;
+      }
+
+      .footer-column ul li a:hover {
+        text-decoration: underline;
+      }
+
+      .social-icons {
+        display: flex;
+        gap: 10px;
+      }
+
+      .qr-code {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 14px;
+      }
+      .social-icons i {
+        font-size: 24px;
+        color: white;
+      }
+
+      .social-icons a {
+        color: white;
+        text-decoration: none;
+        margin-right: 15px;
+        display: flex;
+        align-items: center;
+      }
+
+      .social-icons a:hover {
+        color: #f2a900; /* Màu khi hover */
+      }
+      .social-icons i {
+        font-size: 24px;
+        color: white;
+      }
+
+      .social-icons a {
+        color: white;
+        text-decoration: none;
+        margin-right: 15px;
+        display: flex;
+        align-items: center;
+      }
+
+      .social-icons a:hover {
+        color: #f2a900; /* Màu khi hover */
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Thanh điều hướng -->
+    <div class="navbar">
+      <div class="logo">
+        <a href="home.html">
+          <img src="./img/logo.png" alt="logo" />
+        </a>
+      </div>
+
+      <div class="menu">
+        <a href="#">Dịch vụ</a>
+        <a href="#">Về TDHBank</a>
+        <a href="#">Tin tức</a>
+        <a href="#">Trợ giúp</a>
+        <a href="#">Đối tác</a>
+      </div>
+      <div class="search-box">
+        <input type="text" placeholder="Bạn tìm gì..." />
+        <button>🔍</button>
+      </div>
+    </div>
+
+    <!-- Các dịch vụ -->
+    <div class="services">
+      <button class="service-item">
+        <i class="fas fa-lightbulb"></i>
+        <!-- Biểu tượng cho Điện -->
+        <span>Điện</span>
+      </button>
+      <button class="service-item">
+        <i class="fas fa-tint"></i>
+        <!-- Biểu tượng cho Nước -->
+        <span>Nước</span>
+      </button>
+      <button class="service-item">
+        <i class="fas fa-wifi"></i>
+        <!-- Biểu tượng cho Internet -->
+        <span>Internet</span>
+      </button>
+      <button class="service-item">
+        <i class="fas fa-tv"></i>
+        <!-- Biểu tượng cho Truyền hình -->
+        <span>Truyền hình</span>
+      </button>
+    </div>
+
+    <!-- Nền chuyển động -->
+    <div class="moving-background">
+      <div class="background-image"></div>
+      <div class="background-image"></div>
+
+      <!-- Nút điều khiển chuyển đổi ảnh nền -->
+      <div class="controls">
+        <button class="control-button" onclick="moveBackground('prev')">
+          ❮
+        </button>
+        <button class="control-button" onclick="moveBackground('next')">
+          ❯
+        </button>
+      </div>
+    </div>
+    <!-- Giới thiệu về TDH Bank -->
+    <div class="about-tdhbank">
+      <h2>Về TDH Bank</h2>
+      <p>
+        TDH Bank tự hào là một trong những ngân hàng hàng đầu, luôn đồng hành
+        cùng khách hàng trong hành trình phát triển tài chính bền vững và hiệu
+        quả. Với sứ mệnh mang đến các giải pháp tài chính toàn diện, hiện đại và
+        phù hợp nhất, TDH Bank không ngừng đổi mới để đáp ứng mọi nhu cầu của
+        khách hàng cá nhân và doanh nghiệp.
+      </p>
+      <h3>Lịch sử hình thành</h3>
+      <p>
+        Được thành lập vào năm 2024, TDH Bank đã trải qua hơn 30 năm phát triển
+        mạnh mẽ và không ngừng mở rộng hoạt động. Từ những ngày đầu chỉ tập
+        trung vào các dịch vụ tài chính cơ bản, ngân hàng đã mở rộng quy mô hoạt
+        động sang nhiều lĩnh vực khác nhau như ngân hàng số, đầu tư tài chính,
+        bảo hiểm và thanh toán quốc tế.
+      </p>
+      <h3>Sứ mệnh và tầm nhìn</h3>
+      <p>
+        <strong>Sứ mệnh:</strong> Tạo dựng một hệ sinh thái tài chính toàn diện,
+        giúp khách hàng dễ dàng tiếp cận các dịch vụ ngân hàng hiện đại, minh
+        bạch và hiệu quả. <strong>Tầm nhìn:</strong> Trở thành ngân hàng dẫn đầu
+        khu vực Đông Nam Á về dịch vụ tài chính số và trải nghiệm khách hàng.
+      </p>
+      <h3>Giá trị cốt lõi</h3>
+      <ul>
+        <li>
+          <strong>Khách hàng là trung tâm:</strong> Luôn lắng nghe và đặt lợi
+          ích của khách hàng lên hàng đầu.
+        </li>
+        <li>
+          <strong>Đổi mới sáng tạo:</strong> Ứng dụng công nghệ hiện đại để mang
+          đến các giải pháp tài chính tiện ích.
+        </li>
+        <li>
+          <strong>Phát triển bền vững:</strong> Cam kết đóng góp vào sự phát
+          triển của cộng đồng và môi trường.
+        </li>
+      </ul>
+      <p>
+        Hãy để TDH Bank đồng hành cùng bạn trong hành trình kiến tạo tương lai
+        tài chính vững chắc!
+      </p>
+    </div>
+    <!-- Nút Thanh Toán Ngay -->
+    <div class="payment-button">
+      <a href="transfer.html" class="btn-payment">THANH TOÁN NGAY</a>
+    </div>
+    <footer class="footer">
+      <div class="footer-container">
+        <!-- Cột 1 -->
+        <div class="footer-column">
+          <h3>VỀ CHÚNG TÔI</h3>
+          <ul>
+            <li><a href="#">Giới thiệu</a></li>
+            <li><a href="#">An toàn - Bảo mật</a></li>
+            <li><a href="#">Điều khoản điều lệ</a></li>
+            <li><a href="#">Chính sách quyền riêng tư</a></li>
+            <li><a href="#">Điều khoản liên kết Google</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Liên hệ</a></li>
+            <li><a href="#">Hỏi đáp</a></li>
+          </ul>
+        </div>
+
+        <!-- Cột 2 -->
+        <div class="footer-column">
+          <h3>DỊCH VỤ NỔI BẬT</h3>
+          <ul>
+            <li><a href="#">Vé xem phim</a></li>
+            <li><a href="#">Bảo hiểm Ô tô</a></li>
+            <li><a href="#">Vé máy bay</a></li>
+            <li><a href="#">Ví nhân ái</a></li>
+            <li><a href="#">Túi thần tài</a></li>
+            <li><a href="#">Ví trả sau</a></li>
+            <li><a href="#">Vay nhanh</a></li>
+            <li><a href="#">Trả góp Apple</a></li>
+          </ul>
+        </div>
+
+        <!-- Cột 3 -->
+        <div class="footer-column">
+          <h3>CHĂM SÓC KHÁCH HÀNG</h3>
+          <p>Địa chỉ:Trường Đại Học Nông Lâm TPHCM</p>
+          <p>Hotline:Một Chín Không Không Một Không Không Biết</p>
+          <p>Email: <a href="TDHBANK@gmail.com">hotro@TDHBANK.com</a></p>
+          <button>ỨNG DỤNG TDH BANK</button>
+        </div>
+
+        <!-- Cột 4 -->
+        <div class="footer-column">
+          <h3>KẾT NỐI VỚI CHÚNG TÔI</h3>
+          <ul class="social-icons">
+            <li>
+              <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+            </li>
+            <li>
+              <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            </li>
+            <li>
+              <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+            </li>
+          </ul>
+
+          <h3>TẢI ỨNG DỤNG TRÊN ĐIỆN THOẠI</h3>
+          <div class="qr-code">
+            <img src="qr-code.png" alt="QR Code" />
+            <div>
+              <a href="#">App Store</a>
+              <a href="#">Google Play</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© No Copyright Nguyễn Văn Điền</p>
+      </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <script>
+      let currentIndex = 0; // Chỉ số ảnh nền hiện tại
+      const images = document.querySelectorAll(".background-image");
+
+      // Hàm di chuyển ảnh nền
+      function moveBackground(direction) {
+        if (direction === "next") {
+          currentIndex = (currentIndex + 1) % images.length;
+        } else {
+          currentIndex = (currentIndex - 1 + images.length) % images.length;
+        }
+
+        // Chuyển đổi ảnh nền
+        images.forEach((image, index) => {
+          if (index === currentIndex) {
+            image.style.transform = "translateX(0)";
+          } else {
+            image.style.transform = "translateX(100%)";
+          }
+        });
+      }
+      function moveBackground(direction) {
+        images.forEach((image) => image.classList.remove("active")); // Bỏ class "active" cũ
+
+        if (direction === "next") {
+          currentIndex = (currentIndex + 1) % images.length;
+        } else {
+          currentIndex = (currentIndex - 1 + images.length) % images.length;
+        }
+
+        images[currentIndex].classList.add("active"); // Thêm class "active" mới
+      }
+      let autoSlideInterval = setInterval(() => moveBackground("next"), 5000); // 5 giây
+
+      // Tạm dừng khi di chuột vào `.moving-background`
+      document
+        .querySelector(".moving-background")
+        .addEventListener("mouseover", () => {
+          clearInterval(autoSlideInterval);
+        });
+
+      // Tiếp tục khi chuột ra khỏi `.moving-background`
+      document
+        .querySelector(".moving-background")
+        .addEventListener("mouseout", () => {
+          autoSlideInterval = setInterval(() => moveBackground("next"), 5000);
+        });
+      const paymentButton = document.querySelector(".payment-button");
+
+      let lastScrollPosition = 0; // Theo dõi vị trí cuộn trước đó
+      window.addEventListener("scroll", () => {
+        const currentScrollPosition = window.scrollY;
+
+        if (
+          currentScrollPosition > lastScrollPosition &&
+          currentScrollPosition > 200
+        ) {
+          // Ẩn nút khi cuộn xuống dưới 200px
+          paymentButton.classList.remove("visible");
+          paymentButton.classList.add("hidden");
+        } else {
+          // Hiển thị nút khi cuộn lên
+          paymentButton.classList.remove("hidden");
+          paymentButton.classList.add("visible");
+        }
+
+        lastScrollPosition = currentScrollPosition;
+      });
+    </script>
+  </body>
+</html>

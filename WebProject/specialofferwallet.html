@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Special Offer Wallet</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #2c3e50; /* Màu nền trầm */
+        color: #ecf0f1;
+      }
+
+      /* Logo TDH Bank */
+      .logo {
+        display: flex;
+        align-items: center;
+        margin: 20px;
+      }
+
+      .logo i {
+        font-size: 2.5em;
+        color: #f1c40f;
+        margin-right: 10px;
+      }
+
+      .logo-name {
+        font-size: 2em;
+        font-family: "Roboto", sans-serif;
+        font-weight: 700;
+        color: white;
+      }
+
+      .logo-name span {
+        color: #f1c40f;
+      }
+
+      /* Logo công ty nằm ở bên trái */
+      .company-logo {
+        width: 150px;
+        height: auto;
+        display: inline-block;
+        margin: 20px 20px;
+      }
+
+      /* Header */
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+        background: #333; /* Màu nền tối */
+        padding: 40px 20px;
+        border-radius: 15px;
+        color: white;
+      }
+
+      .header h1 {
+        font-size: 3em;
+        font-family: "Roboto", sans-serif;
+        letter-spacing: 2px;
+        color: #f1c40f;
+      }
+
+      .header p {
+        font-size: 1.2em;
+        font-weight: 400;
+      }
+
+      /* Cột chính */
+      .main-content {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+      }
+
+      /* Cột trái */
+      .left-column {
+        width: 60%;
+      }
+
+      .promo-card {
+        background: #444; /* Màu nền thẻ tối */
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between; /* Căn chỉnh nội dung nằm ngang */
+        align-items: center; /* Căn giữa nội dung theo chiều dọc */
+        color: white;
+      }
+
+      /* Tiêu đề ưu đãi */
+      .promo-card h2 {
+        font-size: 2.2em;
+        color: #f1c40f; /* Màu vàng sáng cho tiêu đề */
+        font-family: "Montserrat", sans-serif;
+        margin-bottom: 15px;
+        white-space: normal; /* Cho phép xuống dòng */
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+
+      /* Mô tả chi tiết ưu đãi */
+      .promo-card p {
+        font-size: 1.1em;
+        color: #ddd; /* Màu chữ sáng để dễ đọc */
+        line-height: 1.7;
+        margin-bottom: 15px;
+      }
+
+      /* Hình ảnh thẻ đa năng */
+      .promo-image {
+        width: 150px;
+        height: auto;
+        margin-left: 10px;
+        margin-right: 10px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Cột phải */
+      .right-column {
+        width: 35%;
+        padding-top: 10px;
+      }
+
+      /* Form đăng ký */
+      .signup-form {
+        background: #444; /* Màu nền tối */
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .signup-form h2 {
+        font-size: 2em;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #f1c40f; /* Màu vàng sáng cho tiêu đề */
+        font-family: "Montserrat", sans-serif;
+      }
+
+      /* Các trường input trong form */
+      .input-field {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 15px;
+        border: 1px solid #666;
+        border-radius: 5px;
+        font-size: 1.1em;
+        font-family: "Roboto", sans-serif;
+        background-color: #555;
+        color: white;
+      }
+
+      /* Nút đăng ký */
+      .signup-button {
+        width: 100%;
+        padding: 15px;
+        background-color: #f1c40f;
+        color: black;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.3em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      /* Hiệu ứng hover cho nút */
+      .signup-button:hover {
+        background-color: #d4ac0d;
+      }
+
+      /* Hiệu ứng hover cho các thẻ promo */
+      .promo-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .promo-image:hover {
+        transform: scale(1.05);
+        transition: transform 0.3s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="f-pattern">
+      <!-- TDH Bank logo and name -->
+      <a href="#" class="logo">
+        <i class="bx bx-code-alt"></i>
+        <div class="logo-name"><span>TDH</span> Bank</div>
+      </a>
+      <div class="header">
+        <h1>Chương Trình Khuyến Mãi Thẻ Đa Năng</h1>
+        <p>Đăng ký ngay để nhận ưu đãi đặc biệt!</p>
+      </div>
+      <div class="main-content">
+        <div class="left-column">
+          <div class="promo-card">
+            <img
+              src="img/thedanang.jpg"
+              alt="Thẻ Đa Năng"
+              class="promo-image"
+            />
+            <!-- Hình ảnh thẻ đa năng -->
+            <div>
+              <h2>Ưu đãi 1: Hoàn tiền 55K</h2>
+              <p>
+                Chỉ cần chi tiêu từ 300K là bạn sẽ nhận ngay hoàn tiền 55K. Tận
+                hưởng ngay những ưu đãi từ Thẻ Đa Năng giúp bạn tiết kiệm hơn
+                mỗi ngày. Hãy tận dụng cơ hội này để nhận các phần quà hấp dẫn
+                như hoàn tiền, miễn phí phí giao dịch và nhiều lợi ích khác.
+                Cùng với thẻ này, bạn có thể thanh toán dễ dàng và nhanh chóng
+                trên toàn quốc. Đừng bỏ lỡ cơ hội để nhận ưu đãi tuyệt vời từ
+                chúng tôi!
+              </p>
+            </div>
+          </div>
+          <div class="promo-card">
+            <img
+              src="img/thedanang.jpg"
+              alt="Thẻ Đa Năng"
+              class="promo-image"
+            />
+            <!-- Hình ảnh thẻ đa năng -->
+            <div>
+              <h2>Ưu đãi 2: Thẻ tín dụng 2 in 1</h2>
+              <p>
+                Thẻ tín dụng và thẻ ATM tích hợp trong một chiếc thẻ. Quản lý dễ
+                dàng! Thẻ Đa Năng của chúng tôi mang đến cho bạn sự linh hoạt và
+                tiện lợi khi sử dụng. Bạn không cần phải mang theo nhiều thẻ
+                nữa, chỉ cần một thẻ duy nhất để thanh toán và rút tiền.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="right-column">
+          <div class="signup-form">
+            <h2>Đăng Ký Ngay</h2>
+            <input type="text" placeholder="Họ và tên" class="input-field" />
+            <input type="email" placeholder="Email" class="input-field" />
+            <button class="signup-button">Đăng Ký</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
